@@ -40,7 +40,7 @@ var DISABLED_WASH = 'rgba(255,255,255,0.25)';
 
 var TEXT_INPUT_REF = 'urlInput';
 var WEBVIEW_REF = 'webview';
-var DEFAULT_URL = 'https://m.facebook.com';
+var DEFAULT_URL = 'https://stripe.com';
 
 class WebViewExample extends React.Component {
   state = {
@@ -407,73 +407,4 @@ const HTML = `
 </html>
 `;
 
-exports.displayName = (undefined: ?string);
-exports.title = '<WebView>';
-exports.description = 'Base component to display web content';
-exports.examples = [
-  {
-    title: 'Simple Browser',
-    render(): React.Element<any> { return <WebViewExample />; }
-  },
-  {
-    title: 'Scale Page to Fit',
-    render(): React.Element<any> { return <ScaledWebView/>; }
-  },
-  {
-    title: 'Bundled HTML',
-    render(): React.Element<any> {
-      return (
-        <WebView
-          style={{
-            backgroundColor: BGWASH,
-            height: 100,
-          }}
-          source={require('./helloworld.html')}
-          scalesPageToFit={true}
-        />
-      );
-    }
-  },
-  {
-    title: 'Static HTML',
-    render(): React.Element<any> {
-      return (
-        <WebView
-          style={{
-            backgroundColor: BGWASH,
-            height: 100,
-          }}
-          source={{html: HTML}}
-          scalesPageToFit={true}
-        />
-      );
-    }
-  },
-  {
-    title: 'POST Test',
-    render(): React.Element<any> {
-      return (
-        <WebView
-          style={{
-            backgroundColor: BGWASH,
-            height: 100,
-          }}
-          source={{
-            uri: 'http://www.posttestserver.com/post.php',
-            method: 'POST',
-            body: 'foo=bar&bar=foo'
-          }}
-          scalesPageToFit={false}
-        />
-      );
-    }
-  },
-  {
-    title: 'Messaging Test',
-    render(): ReactElement<any> { return <MessagingTest />; }
-  },
-  {
-    title: 'Inject JavaScript',
-    render(): React.Element<any> { return <InjectJS />; }
-  },
-];
+export default WebViewExample;
