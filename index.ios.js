@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 import Drawer from 'react-native-drawer';
 import FullWebView from './FullWebView';
+import Control from './Control';
 
 const CustomStatusBar = ({backgroundColor, ...props}) => (
   <View style={[styles.statusBar, { backgroundColor }]}>
@@ -48,7 +49,7 @@ class Slingshot extends React.Component {
         />
         <Drawer
           type="overlay"
-          content={<View><Text>Foo</Text></View>}
+          content={<Control />}
           openDrawerOffset={0}
           closedDrawerOffset={0}
           panCloseMask={0.3}
