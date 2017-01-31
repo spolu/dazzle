@@ -26,20 +26,22 @@ class FullWebView extends React.Component {
   render() {
     return(
       <View style={[styles.container]}>
-        <WebView
-          ref={WEBVIEW_REF}
-          automaticallyAdjustContentInsets={false}
-          bounces={false}
-          style={styles.webView}
-          source={{uri: this.state.url}}
-          javaScriptEnabled={true}
-          domStorageEnabled={true}
-          decelerationRate="normal"
-          onNavigationStateChange={this.onNavigationStateChange}
-          onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
-          startInLoadingState={true}
-          scalesPageToFit={this.state.scalesPageToFit}
-        />
+        <View style={[styles.borderContainer]}>
+          <WebView
+            ref={WEBVIEW_REF}
+            automaticallyAdjustContentInsets={false}
+            bounces={false}
+            style={styles.webView}
+            source={{uri: this.state.url}}
+            javaScriptEnabled={true}
+            domStorageEnabled={true}
+            decelerationRate="normal"
+            onNavigationStateChange={this.onNavigationStateChange}
+            onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
+            startInLoadingState={true}
+            scalesPageToFit={this.state.scalesPageToFit}
+          />
+        </View>
         <View style={styles.urlBar}>
           <Text style={styles.urlBarText}>{this.state.url}</Text>
         </View>
@@ -66,6 +68,11 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#000000',
+  },
+  borderContainer: {
+    flex: 1,
+    borderRadius: 2,
+    overflow: 'hidden',
   },
   webView: {
     backgroundColor: 'rgba(255,255,255,0.8)',
