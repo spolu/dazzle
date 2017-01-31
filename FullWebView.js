@@ -29,6 +29,7 @@ class FullWebView extends React.Component {
         <WebView
           ref={WEBVIEW_REF}
           automaticallyAdjustContentInsets={false}
+          bounces={false}
           style={styles.webView}
           source={{uri: this.state.url}}
           javaScriptEnabled={true}
