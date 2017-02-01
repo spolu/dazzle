@@ -1,8 +1,8 @@
 'use strict';
 
-var React = require('react');
-var ReactNative = require('react-native');
-var {
+import * as actions from '../actions'
+import React, { Component, PropTypes } from 'react';
+import {
   StyleSheet,
   Text,
   TextInput,
@@ -10,7 +10,9 @@ var {
   TouchableOpacity,
   View,
   WebView
-} = ReactNative;
+} from 'react-native';
+import { connect } from 'react-redux'
+
 
 var WEBVIEW_REF = 'webview';
 var DEFAULT_URL = 'https://stripe.com';
@@ -18,12 +20,12 @@ var DEFAULT_URL = 'https://stripe.com';
 class FullWebView extends React.Component {
   state = {
     url: DEFAULT_URL,
-    status: 'NOOP',
     loading: true,
     scalesPageToFit: true,
   };
 
   render() {
+
     return(
       <View style={[styles.container]}>
         <View style={[styles.borderContainer]}>
@@ -57,11 +59,15 @@ class FullWebView extends React.Component {
   onNavigationStateChange = (navState) => {
     this.setState({
       url: navState.url,
-      status: navState.title,
       loading: navState.loading,
-      scalesPageToFit: true
+      scalesPageToFit: true,
     });
+    this.props.newNavigationState(navState);
   };
+}
+
+FullWebView.propTypes = {
+    newNavigationState: PropTypes.func.isRequired,
 }
 
 var styles = StyleSheet.create({
@@ -71,7 +77,7 @@ var styles = StyleSheet.create({
   },
   borderContainer: {
     flex: 1,
-    borderRadius: 2,
+    borderRadius: 4,
     overflow: 'hidden',
   },
   webView: {
@@ -91,4 +97,11 @@ var styles = StyleSheet.create({
   },
 });
 
-export default FullWebView;
+export default connect(
+  (state, props) => ({
+  }),
+  (dispatch) => ({
+    newNavigationState: (navState) => dispatch(actions.navigationState(navState)),
+  })
+)(FullWebView)
+
