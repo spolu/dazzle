@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Platform, StatusBar } from 'react-native';
 
-import FullWebView from './components/fullWebView';
+import LayoutManager from './components/layoutManager';
 
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
@@ -29,9 +29,7 @@ export default class App extends Component {
             backgroundColor="#000"
             barStyle="light-content"
           />
-          <View style={styles.content}>
-            <FullWebView />
-          </View>
+          <LayoutManager/>
         </View>
       </Provider>
     );
@@ -43,9 +41,6 @@ const styles = StyleSheet.create({
     height: STATUSBAR_HEIGHT,
   },
   container: {
-    flex: 1,
-  },
-  content: {
     flex: 1,
   },
 });

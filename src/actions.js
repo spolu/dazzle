@@ -1,12 +1,10 @@
-export const NAVIGATION_STATE = 'NAVIGATION_STATE';
-export const COMMAND_INPUT = 'COMMAND_INPUT';
-export const COMMAND_SELECT = 'COMMAND_SELECT';
-export const COMMAND_SHOW = 'COMMAND_SHOW';
-export const SEARCH_RESULTS = 'SEARCH_RESULTS';
+'use strict'
+
+import * as constants from './constants.js'
 
 export function navigationState(navState) {
   return {
-    type: NAVIGATION_STATE,
+    type: constants.ACTION_NAVIGATION_STATE,
     payload: {
       navState: navState,
     }
@@ -15,7 +13,7 @@ export function navigationState(navState) {
 
 export function commandInput(input) {
   return {
-    type: COMMAND_INPUT,
+    type: constants.ACTION_COMMAND_INPUT,
     payload: {
       input: input
     }
@@ -24,7 +22,7 @@ export function commandInput(input) {
 
 export function commandSelect(index) {
   return {
-    type: COMMAND_SELECT,
+    type: constants.ACTION_COMMAND_SELECT,
     payload: {
       index: index
     }
@@ -33,14 +31,14 @@ export function commandSelect(index) {
 
 export function commandShow() {
   return {
-    type: COMMAND_SHOW
+    type: constants.ACTION_COMMAND_SHOW
   };
 }
 
 
 export function searchResults(results) {
   return {
-    type: SEARCH_RESULTS,
+    type: constants.ACTION_SEARCH_RESULTS,
     payload: {
       results: results
     }

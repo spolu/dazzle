@@ -1,20 +1,14 @@
 'use strict'
 
-import {
-  NAVIGATION_STATE,
-  COMMAND_INPUT,
-  COMMAND_SELECT,
-  COMMAND_SHOW,
-  SEARCH_RESULTS,
-} from './actions.js';
+import * as constants from './constants.js'
 
 const initialState = {
-  command: false,  // Whether the commands are shown or not.
-  input: '',       // Value of the input bar.
-  domain: '',      // Current domain.
-  safe: true,      // Whether the connection is safe or not.
-  results: [],     // Resuts shown in the result list.
-  history: {}      // Navigation history.
+  mode: constants.MODE_NAVIGATION,  // The initial mode of the app.
+  input: '',                        // Value of the input bar.
+  domain: '',                       // Current domain.
+  safe: true,                       // Whether the connection is safe or not.
+  results: [],                      // Resuts shown in the result list.
+  history: {}                       // Navigation history.
 };
 
 // parseURL parses an URL into an object with domain, scheme and path.
@@ -53,7 +47,7 @@ function parseURL(url) {
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
 
-    case NAVIGATION_STATE:
+    case constants.ACTION_NAVIGATION_STATE:
       let navState = action.payload.navState;
       let url = parseURL(navState.url);
       var history = state.history;
@@ -84,24 +78,25 @@ export default function reducer(state = initialState, action = {}) {
         history: history
       };
 
-    case COMMAND_SHOW:
+    case constants.ACTION_COMMAND_SHOW:
+      console.log('FOOOO !!!!!')
       return {
         ...state,
-        command: true,
+        mode: constants.MODE_COMMAND,
       };
 
-    case COMMAND_INPUT:
+    case constants.ACTION_COMMAND_INPUT:
       // TODO recompute results
       // TODO trigger google search
 
       return state;
 
-    case COMMAND_SELECT:
+    case constants.ACTION_COMMAND_SELECT:
       // TODO recompute results
 
       return {
         ...state,
-        command: false,
+        mode: constants.MODE_NAVIGATION,
       };
 
 
