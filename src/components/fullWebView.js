@@ -24,7 +24,6 @@ class FullWebView extends React.Component {
   };
 
   render() {
-
     return(
       <View style={[styles.container]}>
         <WebView
@@ -45,6 +44,14 @@ class FullWebView extends React.Component {
     );
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.url != nextProps.url && nextProps.url != this.state.url) {
+      this.setState({
+        url: nextProps.url,
+      })
+    }
+  }
+
   onShouldStartLoadWithRequest = (event) => {
     // Implement any custom loading logic here, don't forget to return!
     return true;
@@ -60,7 +67,8 @@ class FullWebView extends React.Component {
 }
 
 FullWebView.propTypes = {
-    newNavigationState: PropTypes.func.isRequired,
+  url: PropTypes.string.isRequired,
+  newNavigationState: PropTypes.func.isRequired,
 }
 
 var styles = StyleSheet.create({
@@ -77,6 +85,7 @@ var styles = StyleSheet.create({
 
 export default connect(
   (state, props) => ({
+    url: state.url,
   }),
   (dispatch) => ({
     newNavigationState: (navState) => dispatch(actions.navigationState(navState)),

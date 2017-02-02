@@ -4,15 +4,122 @@ import * as constants from './constants.js'
 
 const initialState = {
   mode: constants.MODE_NAVIGATION,  // The initial mode of the app.
-  input: '',                        // Value of the input bar.
   domain: '',                       // Current domain.
   safe: true,                       // Whether the connection is safe or not.
+  url: '',                          // the current URL of the webview.
+  input: '',                        // the current command input value.
   results: [],                      // Resuts shown in the result list.
   history: {}                       // Navigation history.
 };
 
+export default function reducer(state = initialState, action = {}) {
+  switch (action.type) {
+
+    case constants.ACTION_NAVIGATION_STATE:
+      let navState = action.payload.navState;
+      let url = parseURL(navState.url);
+      var history = state.history;
+
+      if (!navState.loading &&
+        !navState.navigationType) {
+        history[url.domain] = history[url.domain] || {
+          hit: 0,
+          pathes: {}
+        };
+        history[url.domain].hit += 1;
+
+        history[url.domain].pathes[url.path] =
+          history[url.domain].pathes[url.path] || {
+            hit: 0,
+            title: ''
+          };
+        history[url.domain].pathes[url.path].hit += 1;
+        history[url.domain].pathes[url.path].title = navState.title || '';
+      }
+
+      return {
+        ...state,
+        domain: url.domain,
+        history: history,
+        url: navState.url,
+      };
+
+    case constants.ACTION_COMMAND_SHOW:
+      let results = computeResults('')
+
+      return {
+        ...state,
+        results: computeResults(''),
+        mode: constants.MODE_COMMAND,
+      };
+
+    case constants.ACTION_COMMAND_INPUT:
+      return {
+        ...state,
+        input: action.payload.input,
+        results: computeResults(action.payload.input),
+      };
+
+    case constants.ACTION_COMMAND_SELECT:
+      const idx = action.payload.index;
+      if (idx < state.results.length) {
+        return {
+          ...state,
+          results: [],
+          input: '',
+          url: state.results[idx].target,
+          mode: constants.MODE_NAVIGATION,
+        };
+      } else {
+        return {
+          ...state,
+          results: [],
+          input: '',
+          mode: constants.MODE_NAVIGATION,
+        };
+      }
+
+    default:
+      return state;
+  }
+}
+
+const inputURLRegexp =
+  /^(https?:\/\/)?([-a-zA-Z0-9@%._\+~#=]{2,512}\.([a-z]{2,4}))\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/
+
+// computeResults recomputes the results to show in COMMAND mode based on the
+// current input value.
+const computeResults = (input) => {
+  let results = [];
+  input = input.trim();
+
+  let url = inputURLRegexp.exec(input);
+  // TODO check against a list of TLDs
+  if (url != null) {
+    results.push({
+      type: constants.RESULT_TYPE_URL,
+      target: url[0],
+      url: url[0],
+      title: '',
+    });
+  }
+
+  if (input.length > 0) {
+    const searchURL = 'https://www.google.com/search?&ie=UTF-8&q=' +
+      encodeURIComponent(input)
+    results.push({
+      type: constants.RESULT_TYPE_SEARCH,
+      target: searchURL,
+      url: '',
+      title: input,
+    })
+  }
+
+  return results;
+}
+
 // parseURL parses an URL into an object with domain, scheme and path.
-function parseURL(url) {
+const parseURL = (url) => {
   var domain;
   var scheme;
   var path;
@@ -44,62 +151,3 @@ function parseURL(url) {
   };
 }
 
-export default function reducer(state = initialState, action = {}) {
-  switch (action.type) {
-
-    case constants.ACTION_NAVIGATION_STATE:
-      let navState = action.payload.navState;
-      let url = parseURL(navState.url);
-      var history = state.history;
-
-      if (!navState.loading &&
-        !navState.navigationType) {
-        history[url.domain] = history[url.domain] || {
-          hit: 0,
-          pathes: {}
-        };
-        history[url.domain].hit += 1;
-
-        history[url.domain].pathes[url.path] =
-          history[url.domain].pathes[url.path] || {
-            hit: 0,
-            title: ''
-          };
-        history[url.domain].pathes[url.path].hit += 1;
-        history[url.domain].pathes[url.path].title = navState.title || '';
-
-        // TODO recompute results
-      }
-
-      return {
-        ...state,
-        domain: url.domain,
-        input: url.domain + url.path,
-        history: history
-      };
-
-    case constants.ACTION_COMMAND_SHOW:
-      return {
-        ...state,
-        mode: constants.MODE_COMMAND,
-      };
-
-    case constants.ACTION_COMMAND_INPUT:
-      // TODO recompute results
-      // TODO trigger google search
-
-      return state;
-
-    case constants.ACTION_COMMAND_SELECT:
-      // TODO recompute results
-
-      return {
-        ...state,
-        mode: constants.MODE_NAVIGATION,
-      };
-
-
-    default:
-      return state;
-  }
-}

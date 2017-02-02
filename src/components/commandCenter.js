@@ -7,9 +7,11 @@ import { connect } from 'react-redux'
 import * as constants from '../constants.js'
 import * as actions from '../actions'
 
-const TEXTINPUT_REF = 'urlInput';
-
 class CommandCenter extends Component {
+  state = {
+    input: '',
+  }
+
   render() {
     return (
       <TouchableOpacity
@@ -32,15 +34,16 @@ class CommandCenter extends Component {
           styles.urlTextNavigation,
           this.props.mode == constants.MODE_COMMAND &&
           styles.urlTextCommand,
-        ]}>Test</Text>
+        ]}>{this.props.domain}</Text>
         <TextInput
-          ref={TEXTINPUT_REF}
+          ref={'urlInput'}
           autoCapitalize="none"
           autoCorrect={false}
           keyboardType="web-search"
-          defaultValue={''}
+          value={this.state.input}
           onSubmitEditing={this.onSubmitEditing}
           onChange={this.handleTextInputChange}
+          selectTextOnFocus={true}
           clearButtonMode="while-editing"
           style={[
             styles.textInput,
@@ -55,18 +58,46 @@ class CommandCenter extends Component {
     );
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.mode != nextProps.mode) {
+      switch (nextProps.mode) {
+        case constants.MODE_NAVIGATION:
+          this.refs.urlInput.blur();
+          break;
+        case constants.MODE_COMMAND:
+          this.refs.urlInput.focus();
+          break;
+      }
+    }
+    // Update the urlInput value if we're in NAVIGATION mode (it will set it to
+    // the current URL right before switching to COMMAND mode).
+    if (this.props.mode == constants.MODE_NAVIGATION) {
+      this.setState({
+        input: nextProps.url,
+      })
+    }
+  }
+
   onSubmitEditing = (event) => {
-    this.props.onInputSubmit();
+    this.props.onCommandSubmit();
   };
 
   handleTextInputChange = (event) => {
-    //console.log('!!!! EVENT', event)
+    this.setState({
+      input: event.nativeEvent.text,
+    })
+    this.props.onCommandInput(event.nativeEvent.text);
   };
 }
 
 CommandCenter.propTypes = {
   mode: PropTypes.string.isRequired,
+  domain: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+  safe: PropTypes.bool.isRequired,
   onCommandPress: PropTypes.func.isRequired,
+  onCommandInput: PropTypes.func.isRequired,
+  onCommandSubmit: PropTypes.func.isRequired,
 }
 
 var styles = StyleSheet.create({
@@ -111,10 +142,13 @@ var styles = StyleSheet.create({
 export default connect(
   (state, props) => ({
     mode: state.mode,
+    domain: state.domain,
+    safe: state.safe,
+    url: state.url,
   }),
   (dispatch) => ({
     onCommandPress: () => dispatch(actions.commandShow()),
-    onComandInput: (input) => dispatch(actions.commandInput(input)),
-    onInputSubmit: () => dispatch(actions.commandSelect(0)),
+    onCommandInput: (input) => dispatch(actions.commandInput(input)),
+    onCommandSubmit: () => dispatch(actions.commandSelect(0)),
   })
 )(CommandCenter)
