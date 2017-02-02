@@ -79,7 +79,6 @@ export default function reducer(state = initialState, action = {}) {
       };
 
     case constants.ACTION_COMMAND_SHOW:
-      console.log('FOOOO !!!!!')
       return {
         ...state,
         mode: constants.MODE_COMMAND,

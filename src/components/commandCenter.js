@@ -60,7 +60,7 @@ class CommandCenter extends Component {
   };
 
   handleTextInputChange = (event) => {
-    console.log('!!!! EVENT', event)
+    //console.log('!!!! EVENT', event)
   };
 }
 
@@ -71,12 +71,14 @@ CommandCenter.propTypes = {
 
 var styles = StyleSheet.create({
   addressBar: {
+    backgroundColor: '#000'
   },
   addressBarNavigation: {
     height: 22,
     alignItems: 'center',
   },
   addressBarCommand: {
+    height: 30,
   },
   urlText: {
     height: 22,
@@ -87,17 +89,17 @@ var styles = StyleSheet.create({
   urlTextNavigation: {
   },
   urlTextCommand: {
+    opacity: 0,
     height: 0,
   },
   textInput: {
-    backgroundColor: '#444',
+    backgroundColor: '#000',
     color: 'white',
     fontSize: 13,
   },
   textInputNavigation: {
     height: 22,
     opacity: 0,
-    backgroundColor: 'transparent',
   },
   textInputCommand: {
     height: 30,
