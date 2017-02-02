@@ -44,7 +44,7 @@ class CommandCenter extends Component {
           onSubmitEditing={this.onSubmitEditing}
           onChange={this.handleTextInputChange}
           selectTextOnFocus={true}
-          clearButtonMode="while-editing"
+          clearButtonMode="never"
           style={[
             styles.textInput,
             this.props.mode == constants.MODE_NAVIGATION &&
@@ -125,16 +125,16 @@ var styles = StyleSheet.create({
     height: 0,
   },
   textInput: {
+    height: constants.HEIGHT_CC_COMMAND-10,
     backgroundColor: '#000',
+    paddingLeft: 10,
     color: 'white',
     fontSize: 15,
   },
   textInputNavigation: {
-    height: constants.HEIGHT_CC_NAVIGATION,
     opacity: 0,
   },
   textInputCommand: {
-    height: constants.HEIGHT_CC_COMMAND-4,
     opacity: 1,
   }
 })
