@@ -36,7 +36,9 @@ class CommandCenter extends Component {
         <TextInput
           ref={TEXTINPUT_REF}
           autoCapitalize="none"
-          defaultValue={'TEST'}
+          autoCorrect={false}
+          keyboardType="web-search"
+          defaultValue={''}
           onSubmitEditing={this.onSubmitEditing}
           onChange={this.handleTextInputChange}
           clearButtonMode="while-editing"
@@ -83,6 +85,7 @@ var styles = StyleSheet.create({
   urlTextNavigation: {
   },
   urlTextCommand: {
+    height: 0,
   },
   textInput: {
     backgroundColor: '#444',
@@ -95,6 +98,8 @@ var styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   textInputCommand: {
+    height: 30,
+    opacity: 1,
   }
 })
 
