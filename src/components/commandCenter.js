@@ -74,17 +74,18 @@ var styles = StyleSheet.create({
     backgroundColor: '#000'
   },
   addressBarNavigation: {
-    height: 22,
+    height: constants.HEIGHT_CC_NAVIGATION,
     alignItems: 'center',
   },
   addressBarCommand: {
-    height: 30,
+    height: constants.HEIGHT_CC_COMMAND,
   },
   urlText: {
-    height: 22,
+    height: constants.HEIGHT_CC_NAVIGATION,
     color: 'white',
-    fontSize: 13,
-    paddingTop: 2,
+    fontSize: 15,
+    paddingTop: 5,
+    fontWeight: '600',
   },
   urlTextNavigation: {
   },
@@ -95,14 +96,14 @@ var styles = StyleSheet.create({
   textInput: {
     backgroundColor: '#000',
     color: 'white',
-    fontSize: 13,
+    fontSize: 15,
   },
   textInputNavigation: {
-    height: 22,
+    height: constants.HEIGHT_CC_NAVIGATION,
     opacity: 0,
   },
   textInputCommand: {
-    height: 30,
+    height: constants.HEIGHT_CC_COMMAND-4,
     opacity: 1,
   }
 })

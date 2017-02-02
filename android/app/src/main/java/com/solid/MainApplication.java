@@ -1,4 +1,4 @@
-package com.slingshot;
+package com.solid;
 
 import android.app.Application;
 import android.util.Log;

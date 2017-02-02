@@ -73,16 +73,16 @@ var styles = StyleSheet.create({
   webViewContainerCommand: {
     position: 'absolute',
     top: 0,
-    bottom: 22,
+    bottom: 30,
     left: 0,
     right: 0,
   },
 
   commandCenterContainer: {
-    height: 22,
+    height: constants.HEIGHT_CC_NAVIGATION,
   },
   commandCenterContainerCommand: {
-    height: 30,
+    height: constants.HEIGHT_CC_COMMAND,
   },
 });
 
