@@ -56,9 +56,11 @@ class CommandCenter extends Component {
   }
 
   onSubmitEditing = (event) => {
+    this.props.onInputSubmit();
   };
 
   handleTextInputChange = (event) => {
+    console.log('!!!! EVENT', event)
   };
 }
 
@@ -108,6 +110,8 @@ export default connect(
     mode: state.mode,
   }),
   (dispatch) => ({
-    onCommandPress: () => dispatch(actions.commandShow())
+    onCommandPress: () => dispatch(actions.commandShow()),
+    onComandInput: (input) => dispatch(actions.commandInput(input)),
+    onInputSubmit: () => dispatch(actions.commandSelect(0)),
   })
 )(CommandCenter)
