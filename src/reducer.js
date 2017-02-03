@@ -5,7 +5,8 @@ import * as constants from './constants.js'
 const initialState = {
   mode: constants.MODE_NAVIGATION,  // The initial mode of the app.
   domain: '',                       // Current domain.
-  safe: true,                       // Whether the connection is safe or not.
+  safe: true,                       // whether the connection is safe or not.
+  loading: false,                   // whether webview is loading.
   url: '',                          // the current URL of the webview.
   input: '',                        // the current command input value.
   results: [],                      // Resuts shown in the result list.
@@ -39,6 +40,7 @@ export default function reducer(state = initialState, action = {}) {
 
       return {
         ...state,
+        loading: navState.loading,
         domain: url.domain,
         history: history,
         url: navState.url,
@@ -98,7 +100,7 @@ const computeResults = (input) => {
   if (url != null) {
     results.push({
       type: constants.RESULT_TYPE_URL,
-      target: url[0],
+      target: (url[1] ? '' : 'http://') + url[0],
       url: url[0],
       title: '',
     });
