@@ -75,7 +75,7 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#000000',
-    borderRadius: 6,
+    borderRadius: 4,
     overflow: 'hidden',
   },
   webView: {

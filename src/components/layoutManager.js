@@ -16,11 +16,14 @@ class LayoutManager extends Component {
       <View style={styles.container}>
         <View
           style={[
-            styles.webViewContainer,
-            this.props.mode == constants.MODE_NAVIGATION &&
-            styles.webViewContainerNavigation,
+            styles.overlayView,
             this.props.mode == constants.MODE_COMMAND &&
-            styles.webViewContainerCommand,
+            styles.overlayViewCommand,
+          ]}
+        />
+        <View
+          style={[
+            styles.webViewContainer
           ]}
         >
           <FullWebView />
@@ -28,8 +31,6 @@ class LayoutManager extends Component {
         <View
           style={[
             styles.listContainer,
-            this.props.mode == constants.MODE_NAVIGATION &&
-            styles.listContainerNavigation,
             this.props.mode == constants.MODE_COMMAND &&
             styles.listContainerCommand,
           ]}
@@ -38,15 +39,15 @@ class LayoutManager extends Component {
         <View
           style={[
             styles.commandCenterContainer,
-            this.props.mode == constants.MODE_NAVIGATION &&
-            styles.commandCenterContainerNavigation,
             this.props.mode == constants.MODE_COMMAND &&
             styles.commandCenterContainerCommand,
           ]}
         >
           <CommandCenter />
         </View>
-        <KeyboardSpacer/>
+        <KeyboardSpacer
+          style={[styles.keyboardSpacer]}
+        />
       </View>
     );
   }
@@ -56,6 +57,13 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#000',
+  },
+
+  overlayView: {
+    flex: 1,
+  },
+  overlayViewCommand: {
+    flex: 0,
   },
 
   listContainer: {
@@ -68,12 +76,9 @@ var styles = StyleSheet.create({
   },
 
   webViewContainer: {
-    flex: 1,
-  },
-  webViewContainerCommand: {
     position: 'absolute',
     top: 0,
-    bottom: 30,
+    bottom: constants.HEIGHT_CC_NAVIGATION,
     left: 0,
     right: 0,
   },
@@ -83,6 +88,10 @@ var styles = StyleSheet.create({
   },
   commandCenterContainerCommand: {
     height: constants.HEIGHT_CC_COMMAND,
+  },
+
+  keyboardSpacer: {
+    backgroundColor: '#000',
   },
 });
 
