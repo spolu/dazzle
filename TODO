@@ -1,0 +1,5 @@
+# general
+
+  [ ] list view with results
+  [ ] history search in results
+  [x] don't tie fullWebView resize to COMMAND mode (absolute)

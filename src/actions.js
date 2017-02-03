@@ -2,12 +2,30 @@
 
 import * as constants from './constants.js'
 
-export function navigationState(navState) {
+export function loadStart(navState) {
   return {
-    type: constants.ACTION_NAVIGATION_STATE,
+    type: constants.ACTION_LOAD_START,
     payload: {
       navState: navState,
     }
+  };
+}
+
+export function loadEnd(navState) {
+  return {
+    type: constants.ACTION_LOAD_END,
+    payload: {
+      navState: navState,
+    },
+  };
+}
+
+export function loadProgress(progress) {
+  return {
+    type: constants.ACTION_LOAD_PROGRESS,
+    payload: {
+      progress: progress,
+    },
   };
 }
 
@@ -15,8 +33,8 @@ export function commandInput(input) {
   return {
     type: constants.ACTION_COMMAND_INPUT,
     payload: {
-      input: input
-    }
+      input: input,
+    },
   };
 }
 
@@ -24,14 +42,15 @@ export function commandSelect(index) {
   return {
     type: constants.ACTION_COMMAND_SELECT,
     payload: {
-      index: index
-    }
+      index: index,
+    },
   };
 }
 
 export function commandShow() {
   return {
-    type: constants.ACTION_COMMAND_SHOW
+    type: constants.ACTION_COMMAND_SHOW,
+    payload: {},
   };
 }
 
@@ -40,7 +59,7 @@ export function searchResults(results) {
   return {
     type: constants.ACTION_SEARCH_RESULTS,
     payload: {
-      results: results
-    }
+      results: results,
+    },
   };
 }

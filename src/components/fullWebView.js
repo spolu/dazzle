@@ -9,10 +9,9 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity,
   View,
-  WebView
 } from 'react-native';
-import { connect } from 'react-redux'
-
+import { connect } from 'react-redux';
+import WKWebView from 'react-native-wkwebview-reborn';
 
 const WEBVIEW_REF = 'webview';
 const DEFAULT_URL = 'https://stripe.com';
@@ -26,19 +25,21 @@ class FullWebView extends React.Component {
   render() {
     return(
       <View style={[styles.container]}>
-        <WebView
+        <WKWebView
           ref={WEBVIEW_REF}
           automaticallyAdjustContentInsets={false}
           bounces={false}
-          style={styles.webView}
           source={{uri: this.state.url}}
-          javaScriptEnabled={true}
-          domStorageEnabled={true}
           decelerationRate="normal"
           onNavigationStateChange={this.onNavigationStateChange}
           onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
-          startInLoadingState={true}
           scalesPageToFit={true}
+          openNewWindowInWebView={true}
+          allowsBackForwardNavigationGestures={true}
+          style={styles.webView}
+          onLoadEnd={this.onLoadEnd}
+          onLoadStart={this.onLoadStart}
+          onProgress={this.onProgress}
         />
       </View>
     );
@@ -62,13 +63,26 @@ class FullWebView extends React.Component {
       url: navState.url,
       loading: navState.loading,
     });
-    this.props.newNavigationState(navState);
+  };
+
+  onLoadEnd = (event) => {
+    this.props.loadEnd(event.nativeEvent);
+  };
+
+  onLoadStart = (event) => {
+    this.props.loadStart(event.nativeEvent);
+  };
+
+  onProgress = (progress) => {
+    this.props.loadProgress(progress);
   };
 }
 
 FullWebView.propTypes = {
   url: PropTypes.string.isRequired,
-  newNavigationState: PropTypes.func.isRequired,
+  loadStart: PropTypes.func.isRequired,
+  loadEnd: PropTypes.func.isRequired,
+  loadProgress: PropTypes.func.isRequired,
 }
 
 var styles = StyleSheet.create({
@@ -88,7 +102,9 @@ export default connect(
     url: state.url,
   }),
   (dispatch) => ({
-    newNavigationState: (navState) => dispatch(actions.navigationState(navState)),
+    loadStart: (navState) => dispatch(actions.loadStart(navState)),
+    loadEnd: (navState) => dispatch(actions.loadEnd(navState)),
+    loadProgress: (progress) => dispatch(actions.loadProgress(progress)),
   })
 )(FullWebView)
 

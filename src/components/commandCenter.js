@@ -23,9 +23,6 @@ class CommandCenter extends Component {
       outputRange: [0, 1 * width],
     });
 
-    if (this.props.loading) {
-    }
-
     return (
       <TouchableOpacity
         onPress={this.props.onCommandPress}
@@ -50,6 +47,8 @@ class CommandCenter extends Component {
             style={[
               styles.progressBar,
               {width: progressWidth},
+              this.props.isLoading &&
+              styles.progressBarLoading,
               this.props.mode == constants.MODE_COMMAND &&
               styles.progressBarCommand,
             ]}
@@ -97,29 +96,25 @@ class CommandCenter extends Component {
       })
     }
 
-    if (this.props.loading != nextProps.loading) {
-      if (!nextProps.loading) {
+    if (this.props.loadingProgress != nextProps.loadingProgress) {
+      Animated.sequence([
+        Animated.timing(this.state.progress, {
+          easing: Easing.inOut(Easing.ease),
+          duration: 200,
+          toValue: nextProps.loadingProgress,
+        }),
+      ]).start();
+    }
+    if (this.props.isLoading != nextProps.isLoading) {
+      if (!nextProps.isLoading) {
         Animated.sequence([
-          Animated.timing(this.state.progress, {
-            easing: Easing.inOut(Easing.ease),
-            duration: 500,
-            toValue: 1,
-          }),
-          Animated.delay(100),
+          Animated.delay(300),
           Animated.timing(this.state.progress, {
             easing: Easing.inOut(Easing.ease),
             duration: 0,
             toValue: 0,
           }),
         ]).start();
-      } else {
-        Animated.sequence([
-          Animated.timing(this.state.progress, {
-            easing: Easing.inOut(Easing.ease),
-            duration: 500,
-            toValue: 0.1,
-          }),
-        ]).start()
       }
     }
   }
@@ -140,8 +135,9 @@ CommandCenter.propTypes = {
   mode: PropTypes.string.isRequired,
   domain: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
-  safe: PropTypes.bool.isRequired,
-  loading: PropTypes.bool.isRequired,
+  isSafe: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  loadingProgress: PropTypes.number.isRequired,
   onCommandPress: PropTypes.func.isRequired,
   onCommandInput: PropTypes.func.isRequired,
   onCommandSubmit: PropTypes.func.isRequired,
@@ -185,6 +181,7 @@ var styles = StyleSheet.create({
   progressBar: {
     position: 'absolute',
     bottom: 0,
+    height: 0,
     height: 2,
     left: 0,
     backgroundColor: 'red',
@@ -198,8 +195,9 @@ export default connect(
   (state, props) => ({
     mode: state.mode,
     domain: state.domain,
-    safe: state.safe,
-    loading: state.loading,
+    isSafe: state.isSafe,
+    isLoading: state.isLoading,
+    loadingProgress: state.loadingProgress,
     url: state.url,
   }),
   (dispatch) => ({

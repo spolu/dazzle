@@ -5,8 +5,9 @@ import * as constants from './constants.js'
 const initialState = {
   mode: constants.MODE_NAVIGATION,  // The initial mode of the app.
   domain: '',                       // Current domain.
-  safe: true,                       // whether the connection is safe or not.
-  loading: false,                   // whether webview is loading.
+  isSafe: true,                     // whether the connection is safe or not.
+  isLoading: false,                 // whether webview is loading.
+  loadingProgress: 0,               // current loading progress.
   url: '',                          // the current URL of the webview.
   input: '',                        // the current command input value.
   results: [],                      // Resuts shown in the result list.
@@ -14,37 +15,55 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action = {}) {
+  const navState = (action.payload) ? action.payload.navState : null;
+  const url = navState ? parseURL(navState.url) : null;
+  const progress = (action.payload) ? action.payload.progress : null;
+  const index = (action.payload) ? action.payload.index : null;
+
   switch (action.type) {
 
-    case constants.ACTION_NAVIGATION_STATE:
-      let navState = action.payload.navState;
-      let url = parseURL(navState.url);
+    case constants.ACTION_LOAD_START:
+      return {
+        ...state,
+        isLoading: true,
+        loadingProgress: 0,
+        domain: url.domain,
+        url: navState.url,
+      };
+
+    case constants.ACTION_LOAD_END:
       var history = state.history;
 
-      if (!navState.loading &&
-        !navState.navigationType) {
-        history[url.domain] = history[url.domain] || {
-          hit: 0,
-          pathes: {}
-        };
-        history[url.domain].hit += 1;
+      history[url.domain] = history[url.domain] || {
+        hit: 0,
+        pathes: {}
+      };
+      history[url.domain].hit += 1;
 
-        history[url.domain].pathes[url.path] =
-          history[url.domain].pathes[url.path] || {
-            hit: 0,
-            title: ''
-          };
-        history[url.domain].pathes[url.path].hit += 1;
-        history[url.domain].pathes[url.path].title = navState.title || '';
-      }
+      history[url.domain].pathes[url.path] =
+        history[url.domain].pathes[url.path] || {
+          hit: 0,
+          title: ''
+        };
+      history[url.domain].pathes[url.path].hit += 1;
+      history[url.domain].pathes[url.path].title = navState.title || '';
 
       return {
         ...state,
-        loading: navState.loading,
+        isLoading: false,
+        loadingProgress: 1,
         domain: url.domain,
         history: history,
         url: navState.url,
       };
+
+    case constants.ACTION_LOAD_PROGRESS:
+
+      return {
+        ...state,
+        loadingProgress: progress,
+      };
+
 
     case constants.ACTION_COMMAND_SHOW:
       let results = computeResults('')
@@ -63,13 +82,12 @@ export default function reducer(state = initialState, action = {}) {
       };
 
     case constants.ACTION_COMMAND_SELECT:
-      const idx = action.payload.index;
-      if (idx < state.results.length) {
+      if (index < state.results.length) {
         return {
           ...state,
           results: [],
           input: '',
-          url: state.results[idx].target,
+          url: state.results[index].target,
           mode: constants.MODE_NAVIGATION,
         };
       } else {
