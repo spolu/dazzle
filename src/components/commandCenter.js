@@ -92,7 +92,7 @@ class CommandCenter extends Component {
     // the current URL right before switching to COMMAND mode).
     if (this.props.mode == constants.MODE_NAVIGATION) {
       this.setState({
-        input: nextProps.url,
+        input: nextProps.currentURL,
       })
     }
 
@@ -134,7 +134,7 @@ class CommandCenter extends Component {
 CommandCenter.propTypes = {
   mode: PropTypes.string.isRequired,
   domain: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
+  currentURL: PropTypes.string.isRequired,
   isSafe: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
   loadingProgress: PropTypes.number.isRequired,
@@ -198,7 +198,7 @@ export default connect(
     isSafe: state.isSafe,
     isLoading: state.isLoading,
     loadingProgress: state.loadingProgress,
-    url: state.url,
+    currentURL: state.currentURL,
   }),
   (dispatch) => ({
     onCommandPress: () => dispatch(actions.commandShow()),

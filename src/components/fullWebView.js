@@ -46,9 +46,11 @@ class FullWebView extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.url != nextProps.url && nextProps.url != this.state.url) {
+    // Navigate when we see targetURL change.
+    if (this.props.targetURL != nextProps.targetURL &&
+      nextProps.targetURL != '') {
       this.setState({
-        url: nextProps.url,
+        url: nextProps.targetURL,
       })
     }
   }
@@ -79,7 +81,8 @@ class FullWebView extends React.Component {
 }
 
 FullWebView.propTypes = {
-  url: PropTypes.string.isRequired,
+  currentURL: PropTypes.string.isRequired,
+  targetURL: PropTypes.string.isRequired,
   loadStart: PropTypes.func.isRequired,
   loadEnd: PropTypes.func.isRequired,
   loadProgress: PropTypes.func.isRequired,
@@ -99,7 +102,8 @@ var styles = StyleSheet.create({
 
 export default connect(
   (state, props) => ({
-    url: state.url,
+    targetURL: state.targetURL,
+    currentURL: state.currentURL,
   }),
   (dispatch) => ({
     loadStart: (navState) => dispatch(actions.loadStart(navState)),

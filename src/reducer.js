@@ -8,7 +8,8 @@ const initialState = {
   isSafe: true,                     // whether the connection is safe or not.
   isLoading: false,                 // whether webview is loading.
   loadingProgress: 0,               // current loading progress.
-  url: '',                          // the current URL of the webview.
+  targetURL: '',                    // requested URL by the user.
+  currentURL: '',                   // the current URL of the webview.
   input: '',                        // the current command input value.
   results: [],                      // Resuts shown in the result list.
   history: {}                       // Navigation history.
@@ -28,7 +29,7 @@ export default function reducer(state = initialState, action = {}) {
         isLoading: true,
         loadingProgress: 0,
         domain: url.domain,
-        url: navState.url,
+        currentURL: navState.url,
       };
 
     case constants.ACTION_LOAD_END:
@@ -54,7 +55,7 @@ export default function reducer(state = initialState, action = {}) {
         loadingProgress: 1,
         domain: url.domain,
         history: history,
-        url: navState.url,
+        currentURL: navState.url,
       };
 
     case constants.ACTION_LOAD_PROGRESS:
@@ -87,7 +88,7 @@ export default function reducer(state = initialState, action = {}) {
           ...state,
           results: [],
           input: '',
-          url: state.results[index].target,
+          targetURL: state.results[index].target,
           mode: constants.MODE_NAVIGATION,
         };
       } else {
