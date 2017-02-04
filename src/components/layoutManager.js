@@ -1,7 +1,7 @@
 'use strict'
 
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { connect } from 'react-redux'
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
@@ -9,6 +9,7 @@ import * as constants from '../constants.js'
 
 import FullWebView from './fullWebView';
 import CommandCenter from './commandCenter';
+import ResultList from './resultList';
 
 class LayoutManager extends Component {
   render() {
@@ -35,6 +36,7 @@ class LayoutManager extends Component {
             styles.listContainerCommand,
           ]}
         >
+          <ResultList />
         </View>
         <View
           style={[
@@ -67,9 +69,7 @@ var styles = StyleSheet.create({
   },
 
   listContainer: {
-    flex: 0,
-    backgroundColor: '#000',
-    opacity: 0.5,
+    height: 0,
   },
   listContainerCommand: {
     flex: 1,
