@@ -5,6 +5,7 @@ import {
   StyleSheet, ListView, View, Text, TouchableHighlight
 } from 'react-native';
 import { connect } from 'react-redux'
+import InvertibleScrollView from 'react-native-invertible-scroll-view';
 
 import * as constants from '../constants.js'
 
@@ -32,6 +33,9 @@ class ResultList extends Component {
         <View style={styles.expander} />
         <View style={styles.wrapper}>
           <ListView
+            renderScrollComponent={
+              props => <InvertibleScrollView {...props} inverted />
+            }
             style={styles.listView}
             enableEmptySections={true}
             dataSource={this.state.dataSource}
