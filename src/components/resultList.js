@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 import InvertibleScrollView from 'react-native-invertible-scroll-view';
 
 import * as constants from '../constants.js'
+import * as actions from '../actions'
 
 class ResultList extends Component {
   constructor(props) {
@@ -47,6 +48,7 @@ class ResultList extends Component {
   }
 
   _onResultPress = (rowID, result) => {
+    this.props.onCommandSelect(rowID);
   }
 
   _renderRow = (result, sectionID, rowID) => {
@@ -57,6 +59,7 @@ class ResultList extends Component {
       >
         <View>
           <View>
+            <Text>{result.type}</Text>
             <Text>{result.url}</Text>
             <Text>{result.title}</Text>
           </View>
@@ -72,6 +75,7 @@ class ResultList extends Component {
 
 ResultList.propTypes = {
   results: PropTypes.array.isRequired,
+  onCommandSelect: PropTypes.func.isRequired,
 }
 
 var styles = StyleSheet.create({

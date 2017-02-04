@@ -1,6 +1,5 @@
 'use strict';
 
-import * as actions from '../actions'
 import React, { Component, PropTypes } from 'react';
 import {
   StyleSheet,
@@ -12,6 +11,8 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import WKWebView from 'react-native-wkwebview-reborn';
+
+import * as actions from '../actions'
 
 const WEBVIEW_REF = 'webview';
 const DEFAULT_URL = 'https://stripe.com';
