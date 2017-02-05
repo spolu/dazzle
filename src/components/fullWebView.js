@@ -30,7 +30,6 @@ class FullWebView extends React.Component {
         <WKWebView
           ref={WEBVIEW_REF}
           automaticallyAdjustContentInsets={false}
-          bounces={false}
           source={{uri: this.state.url}}
           decelerationRate="normal"
           onNavigationStateChange={this.onNavigationStateChange}
@@ -93,8 +92,8 @@ FullWebView.propTypes = {
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    borderRadius: 4,
     backgroundColor: constants.BLACK,
+    borderRadius: 8,
     overflow: 'hidden',
   },
   webView: {
