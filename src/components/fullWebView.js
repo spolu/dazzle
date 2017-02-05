@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 import WKWebView from 'react-native-wkwebview-reborn';
 
 import * as actions from '../actions'
+import * as constants from '../constants'
 
 const WEBVIEW_REF = 'webview';
 const DEFAULT_URL = 'https://stripe.com';
@@ -29,7 +30,6 @@ class FullWebView extends React.Component {
         <WKWebView
           ref={WEBVIEW_REF}
           automaticallyAdjustContentInsets={false}
-          bounces={false}
           source={{uri: this.state.url}}
           decelerationRate="normal"
           onNavigationStateChange={this.onNavigationStateChange}
@@ -92,8 +92,8 @@ FullWebView.propTypes = {
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000000',
-    borderRadius: 4,
+    backgroundColor: constants.BLACK,
+    borderRadius: 8,
     overflow: 'hidden',
   },
   webView: {
@@ -112,4 +112,3 @@ export default connect(
     loadProgress: (progress) => dispatch(actions.loadProgress(progress)),
   })
 )(FullWebView)
-

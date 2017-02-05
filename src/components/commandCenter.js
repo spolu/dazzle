@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux'
 
-import * as constants from '../constants.js'
+import * as constants from '../constants'
 import * as actions from '../actions'
 
 class CommandCenter extends Component {
@@ -145,7 +145,8 @@ CommandCenter.propTypes = {
 
 var styles = StyleSheet.create({
   addressBar: {
-    backgroundColor: '#000'
+    backgroundColor: constants.BLACK,
+    alignItems: 'center',
   },
   addressBarNavigation: {
     height: constants.HEIGHT_CC_NAVIGATION,
@@ -156,21 +157,19 @@ var styles = StyleSheet.create({
   },
   urlText: {
     height: constants.HEIGHT_CC_NAVIGATION,
-    color: 'white',
-    fontSize: 15,
-    paddingTop: 5,
-    fontWeight: '600',
+    color: constants.WHITE,
+    fontSize: constants.FONT_SIZE,
+    paddingTop: 4,
   },
   urlTextCommand: {
     opacity: 0,
     height: 0,
   },
   textInput: {
-    height: constants.HEIGHT_CC_COMMAND-10,
-    backgroundColor: '#000',
-    paddingLeft: 10,
-    color: 'white',
-    fontSize: 15,
+    height: constants.HEIGHT_CC_COMMAND - 10,
+    backgroundColor: constants.BLACK,
+    paddingLeft: 15,
+    color: constants.WHITE,
   },
   textInputNavigation: {
     opacity: 0,
@@ -182,9 +181,9 @@ var styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     height: 0,
-    height: 2,
+    height: 1,
     left: 0,
-    backgroundColor: 'red',
+    backgroundColor: constants.RED,
   },
   progressBarCommand: {
     height: 0,

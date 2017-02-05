@@ -9,6 +9,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk'
 import reducer from './reducer';
+import * as constants from './constants'
 
 const store = applyMiddleware(thunk)(createStore)(reducer);
 
@@ -26,7 +27,7 @@ export default class App extends Component {
       <Provider store={store}>
         <View style={styles.container}>
           <CustomStatusBar
-            backgroundColor="#000"
+            backgroundColor={constants.BLACK}
             barStyle="light-content"
           />
           <LayoutManager/>
@@ -44,4 +45,3 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-

@@ -57,12 +57,10 @@ class ResultList extends Component {
         underlayColor={'#ccc'}
         onPress={() => this._onResultPress(rowID, result)}
       >
-        <View>
-          <View>
-            <Text>{result.type}</Text>
-            <Text>{result.url}</Text>
-            <Text>{result.title}</Text>
-          </View>
+        <View style={styles.row}>
+          <Text style={styles.type}>{result.type}</Text>
+          <Text style={styles.url}>{result.url}</Text>
+          <Text style={styles.title}>{result.title}</Text>
         </View>
       </TouchableHighlight>
     )
@@ -88,8 +86,33 @@ var styles = StyleSheet.create({
   wrapper: {
     flex: 0,
   },
+
   listView: {
     backgroundColor: 'transparent',
+  },
+
+  row: {
+    borderTopWidth: 1,
+    borderStyle: 'solid',
+    borderTopColor: constants.BLACK_TRANSPARENT,
+    height: 44,
+    paddingLeft: 15,
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
+  type: {
+    width: 16,
+    height: 16,
+    marginRight: 15
+  },
+  url: {
+    fontSize: constants.FONT_SIZE,
+    color: constants.BLUE,
+  },
+  title: {
+    fontSize: constants.FONT_SIZE,
   },
 })
 
@@ -101,4 +124,3 @@ export default connect(
     onCommandSelect: (idx) => dispatch(actions.commandSelect(idx)),
   })
 )(ResultList)
-
