@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux'
 import InvertibleScrollView from 'react-native-invertible-scroll-view';
+import { BlurView, VibrancyView } from 'react-native-blur';
 
 import * as constants from '../constants.js'
 import * as actions from '../actions'
@@ -30,7 +31,10 @@ class ResultList extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <VibrancyView
+        style={styles.container}
+        blurType={"dark"}
+      >
         <View style={styles.expander} />
         <View style={styles.wrapper}>
           <ListView
@@ -43,7 +47,7 @@ class ResultList extends Component {
             renderRow={this._renderRow}
           />
         </View>
-      </View>
+      </VibrancyView>
     );
   }
 
