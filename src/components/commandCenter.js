@@ -146,6 +146,7 @@ CommandCenter.propTypes = {
 var styles = StyleSheet.create({
   addressBar: {
     backgroundColor: constants.BLACK,
+    alignItems: 'center',
   },
   addressBarNavigation: {
     height: constants.HEIGHT_CC_NAVIGATION,
@@ -156,18 +157,18 @@ var styles = StyleSheet.create({
   },
   urlText: {
     height: constants.HEIGHT_CC_NAVIGATION,
-    paddingTop: 5,
     color: constants.WHITE,
     fontSize: constants.FONT_SIZE,
+    paddingTop: 4,
   },
   urlTextCommand: {
     opacity: 0,
     height: 0,
   },
   textInput: {
-    paddingLeft: 10,
     height: constants.HEIGHT_CC_COMMAND - 10,
     backgroundColor: constants.BLACK,
+    paddingLeft: 15,
     color: constants.WHITE,
   },
   textInputNavigation: {
@@ -180,7 +181,7 @@ var styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     height: 0,
-    height: 2,
+    height: 1,
     left: 0,
     backgroundColor: constants.RED,
   },
