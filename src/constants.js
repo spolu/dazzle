@@ -19,3 +19,15 @@ export const RESULT_TYPE_URL = 'RESULT_TYPE_URL';
 export const RESULT_TYPE_HISTORY = 'RESULT_TYPE_HISTORY';
 export const RESULT_TYPE_SEARCH = 'RESULT_TYPE_SEARCH';
 export const RESULT_TYPE_PIN = 'RESULT_TYPE_PIN';
+
+// Styles
+export const FONT_SIZE = 16;
+
+// Colors
+export const BLACK = '#000000';
+export const BLACK_TRANSPARENT = BLACK + '20';
+export const WHITE = '#ffffff';
+
+export const RED = '#ff3b53';
+export const GREEN = 'b8e986';
+export const BLUE = '#7fbbff';

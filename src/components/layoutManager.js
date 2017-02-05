@@ -58,7 +58,7 @@ class LayoutManager extends Component {
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: constants.BLACK,
   },
 
   overlayView: {
@@ -91,7 +91,7 @@ var styles = StyleSheet.create({
   },
 
   keyboardSpacer: {
-    backgroundColor: '#000',
+    backgroundColor: constants.BLACK,
   },
 });
 
