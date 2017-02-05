@@ -100,6 +100,7 @@ var styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: constants.BLACK,
   },
 
   type: {
@@ -113,6 +114,7 @@ var styles = StyleSheet.create({
   },
   title: {
     fontSize: constants.FONT_SIZE,
+    color: constants.WHITE,
   },
 })
 
