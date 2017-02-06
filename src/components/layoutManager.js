@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { connect } from 'react-redux'
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+import { BlurView, VibrancyView } from 'react-native-blur';
 
 import * as constants from '../constants.js'
 
@@ -29,27 +30,36 @@ class LayoutManager extends Component {
         >
           <FullWebView />
         </View>
-        <View
+        <BlurView
           style={[
-            styles.listContainer,
+            styles.vibrancyContainer,
             this.props.mode == constants.MODE_COMMAND &&
-            styles.listContainerCommand,
+            styles.vibrancyContainerCommand,
           ]}
+          blurType={"dark"}
         >
-          <ResultList />
-        </View>
-        <View
-          style={[
-            styles.commandCenterContainer,
-            this.props.mode == constants.MODE_COMMAND &&
-            styles.commandCenterContainerCommand,
-          ]}
-        >
-          <CommandCenter />
-        </View>
-        <KeyboardSpacer
-          style={[styles.keyboardSpacer]}
-        />
+          <View
+            style={[
+              styles.listContainer,
+              this.props.mode == constants.MODE_COMMAND &&
+              styles.listContainerCommand,
+            ]}
+          >
+            <ResultList />
+          </View>
+          <View
+            style={[
+              styles.commandCenterContainer,
+              this.props.mode == constants.MODE_COMMAND &&
+              styles.commandCenterContainerCommand,
+            ]}
+          >
+            <CommandCenter />
+          </View>
+          <KeyboardSpacer
+            style={[styles.keyboardSpacer]}
+          />
+        </BlurView>
       </View>
     );
   }
@@ -66,6 +76,14 @@ var styles = StyleSheet.create({
   },
   overlayViewCommand: {
     flex: 0,
+  },
+
+  vibrancyContainer: {
+    flex: 0,
+    height: constants.HEIGHT_CC_NAVIGATION,
+  },
+  vibrancyContainerCommand: {
+    flex: 1,
   },
 
   listContainer: {
