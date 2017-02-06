@@ -100,7 +100,6 @@ var styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: constants.BLACK,
   },
 
   type: {
