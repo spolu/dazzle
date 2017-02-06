@@ -18,7 +18,6 @@ export const HEIGHT_CC_COMMAND = 44;
 export const RESULT_TYPE_URL = 'RESULT_TYPE_URL';
 export const RESULT_TYPE_HISTORY = 'RESULT_TYPE_HISTORY';
 export const RESULT_TYPE_SEARCH = 'RESULT_TYPE_SEARCH';
-export const RESULT_TYPE_PIN = 'RESULT_TYPE_PIN';
 
 // Styles
 export const FONT_SIZE = 16;

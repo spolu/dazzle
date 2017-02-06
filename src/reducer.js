@@ -20,9 +20,9 @@ export default function reducer(state = initialState, action = {}) {
   const url = navState ? parseURL(navState.url) : null;
   const progress = (action.payload) ? action.payload.progress : null;
   const index = (action.payload) ? action.payload.index : null;
+  const history = state.history;
 
   switch (action.type) {
-
     case constants.ACTION_LOAD_START:
       return {
         ...state,
@@ -33,21 +33,23 @@ export default function reducer(state = initialState, action = {}) {
       };
 
     case constants.ACTION_LOAD_END:
-      var history = state.history;
 
       history[url.domain] = history[url.domain] || {
         hit: 0,
         pathes: {}
       };
       history[url.domain].hit += 1;
+      history[url.domain].last = Date.now();
 
       history[url.domain].pathes[url.path] =
         history[url.domain].pathes[url.path] || {
           hit: 0,
           title: ''
         };
+      history[url.domain].pathes[url.path].url = url.raw;
       history[url.domain].pathes[url.path].hit += 1;
       history[url.domain].pathes[url.path].title = navState.title || '';
+      history[url.domain].pathes[url.path].last = Date.now();
 
       return {
         ...state,
@@ -67,11 +69,11 @@ export default function reducer(state = initialState, action = {}) {
 
 
     case constants.ACTION_COMMAND_SHOW:
-      let results = computeResults('')
+      let results = computeResults('', history)
 
       return {
         ...state,
-        results: computeResults(''),
+        results: computeResults('', history),
         mode: constants.MODE_COMMAND,
       };
 
@@ -79,7 +81,7 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         input: action.payload.input,
-        results: computeResults(action.payload.input),
+        results: computeResults(action.payload.input, history),
       };
 
     case constants.ACTION_COMMAND_SELECT:
@@ -109,8 +111,8 @@ const inputURLRegexp =
   /^(https?:\/\/)?([-a-zA-Z0-9@%._\+~#=]{2,512}\.([a-z]{2,4}))\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/
 
 // computeResults recomputes the results to show in COMMAND mode based on the
-// current input value.
-const computeResults = (input) => {
+// current input value and history.
+const computeResults = (input, history) => {
   let results = [];
   input = input.trim();
 
@@ -136,17 +138,48 @@ const computeResults = (input) => {
     })
   }
 
+  let recents = [];
+  for (let domain in history) {
+    for (let path in history[domain].pathes) {
+      let url = domain;
+      if (path != '/') {
+        url += path;
+      }
+
+      recents.push({
+        type: constants.RESULT_TYPE_HISTORY,
+        target: history[domain].pathes[path].url,
+        url: url,
+        title: history[domain].pathes[path].title,
+        last: history[domain].pathes[path].last,
+      });
+    }
+  }
+  recents.sort((a, b) => {
+    if (a.last < b.last) {
+      return 1;
+    } else {
+      return -1;
+    }
+  });
+  recents.forEach(r => {
+    results.push(r);
+  })
+
   return results;
 }
 
-// parseURL parses an URL into an object with domain, scheme and path.
+// parseURL parses an URL into an object with domain, scheme, path, fragment
+// and query.
 const parseURL = (url) => {
-  var domain;
-  var scheme;
-  var path;
+  let domain = null;
+  let scheme = null;
+  let path = null;
+  let fragment = null;
+  let query = null;
 
   if (url.indexOf("://") > -1) {
-    var sp = url.split('/');
+    let sp = url.split('/');
     domain = sp[2];
     scheme = sp[0];
     if (sp.length > 3) {
@@ -155,7 +188,7 @@ const parseURL = (url) => {
       path = '/';
     }
   } else {
-    var sp = url.split('/');
+    let sp = url.split('/');
     scheme = 'http';
     domain = sp[0];
     if (sp.length > 1) {
@@ -165,10 +198,25 @@ const parseURL = (url) => {
     }
   }
 
+  let spf = path.split('#')
+  if (spf.length > 0) {
+    path = spf[0];
+    fragment = path.substr(path.length + 1)
+  }
+
+  let spq = path.split('?')
+  if (spq.length > 0) {
+    path = spq[0];
+    query = path.substr(path.length + 1)
+  }
+
   return {
+    raw: url,
     domain: domain,
     scheme: scheme,
-    path: path
+    path: path,
+    fragment: fragment,
+    query: query,
   };
 }
 

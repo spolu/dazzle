@@ -97,13 +97,15 @@ class CommandCenter extends Component {
     }
 
     if (this.props.loadingProgress != nextProps.loadingProgress) {
-      Animated.sequence([
-        Animated.timing(this.state.progress, {
-          easing: Easing.inOut(Easing.ease),
-          duration: 200,
-          toValue: nextProps.loadingProgress,
-        }),
-      ]).start();
+      if (nextProps.isLoading) {
+        Animated.sequence([
+          Animated.timing(this.state.progress, {
+            easing: Easing.inOut(Easing.ease),
+            duration: 200,
+            toValue: 0.1 + 0.9 * nextProps.loadingProgress,
+          }),
+        ]).start();
+      }
     }
     if (this.props.isLoading != nextProps.isLoading) {
       if (!nextProps.isLoading) {
@@ -113,6 +115,14 @@ class CommandCenter extends Component {
             easing: Easing.inOut(Easing.ease),
             duration: 0,
             toValue: 0,
+          }),
+        ]).start();
+      } else {
+        Animated.sequence([
+          Animated.timing(this.state.progress, {
+            easing: Easing.inOut(Easing.ease),
+            duration: 100,
+            toValue: 0.1,
           }),
         ]).start();
       }

@@ -64,16 +64,21 @@ class FullWebView extends React.Component {
   onNavigationStateChange = (navState) => {
     this.setState({
       url: navState.url,
-      loading: navState.loading,
     });
   };
 
   onLoadEnd = (event) => {
     this.props.loadEnd(event.nativeEvent);
+    this.setState({
+      loading: false,
+    });
   };
 
   onLoadStart = (event) => {
     this.props.loadStart(event.nativeEvent);
+    this.setState({
+      loading: true,
+    });
   };
 
   onProgress = (progress) => {
