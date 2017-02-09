@@ -2,6 +2,7 @@
 
 // Action constants
 export const ACTION_LOAD_START = 'ACTION_LOAD_START';
+export const ACTION_LOAD_RESPONSE = 'ACTION_LOAD_RESPONSE';
 export const ACTION_LOAD_END = 'ACTION_LOAD_END';
 export const ACTION_LOAD_PROGRESS = 'ACTION_LOAD_PROGRESS';
 

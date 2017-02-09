@@ -282,18 +282,22 @@ decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
 decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse
 decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler
 {
-  RCTLogInfo(@"DZWebView RESPONSE: %@", navigationResponse);
-  
-  if (_onLoadingResponse) {
-    if ([navigationResponse.response isKindOfClass:[NSHTTPURLResponse class]] &&
-        navigationResponse.isForMainFrame) {
-      NSHTTPURLResponse *response = (NSHTTPURLResponse *)navigationResponse.response;
-      NSMutableDictionary<NSString *, id> *event = [self baseEvent];
-      [event addEntriesFromDictionary: @{
-                                         @"url": response.URL.absoluteString,
-                                         @"statusCode": @(response.statusCode)
-                                         }];
+  if ([navigationResponse.response isKindOfClass:[NSHTTPURLResponse class]]) {
+    NSHTTPURLResponse *response = (NSHTTPURLResponse *)navigationResponse.response;
+    NSURL* url = response.URL;
+    
+    RCTLogInfo(@"DZWebView RESPONSE: %@", response);
+    
+    if (_onLoadingResponse) {
+      // We have this check to filter out iframe requests and whatnot
+      BOOL isTopFrame = [url isEqual:_webView.URL];
+      if (isTopFrame) {
+        NSMutableDictionary<NSString *, id> *event = [self baseEvent];
+        [event addEntriesFromDictionary: @{
+                                           @"statusCode": @(response.statusCode)
+                                           }];
         _onLoadingResponse(event);
+      }
     }
     decisionHandler(WKNavigationResponsePolicyAllow);
   }
@@ -303,6 +307,8 @@ decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler
 didFailProvisionalNavigation:(__unused WKNavigation *)navigation
       withError:(NSError *)error
 {
+  RCTLogInfo(@"DZWebView FAILURE: %@", navigation);
+
   if (_onLoadingError) {
     if ([error.domain isEqualToString:NSURLErrorDomain] && error.code == NSURLErrorCancelled) {
       // NSURLErrorCancelled is reported when a page has a redirect OR if you load
@@ -325,6 +331,8 @@ didFailProvisionalNavigation:(__unused WKNavigation *)navigation
 - (void)webView:(WKWebView *)webView
 didFinishNavigation:(__unused WKNavigation *)navigation
 {
+  RCTLogInfo(@"DZWebView FINISH: %@", navigation);
+
   if (_injectedJavaScript != nil) {
     [webView evaluateJavaScript:_injectedJavaScript completionHandler:^(id result, NSError *error) {
       NSMutableDictionary<NSString *, id> *event = [self baseEvent];

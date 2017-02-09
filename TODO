@@ -1,6 +1,8 @@
 # general
 
-  [ ] extract error codes from load events
+  [ ] introduce pending in state (make it searchable)
+  [ ] commit pending only if 200 and loadEnd
   [ ] history search in results
+  [x] extract error codes from load events
   [x] list view with results
   [x] don't tie fullWebView resize to COMMAND mode (absolute)

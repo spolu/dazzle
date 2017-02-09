@@ -40,6 +40,7 @@ class FullWebView extends React.Component {
           style={styles.webView}
           onLoadEnd={this.onLoadEnd}
           onLoadStart={this.onLoadStart}
+          onLoadResponse={this.onLoadResponse}
           onProgress={this.onProgress}
         />
       </View>
@@ -62,6 +63,7 @@ class FullWebView extends React.Component {
   };
 
   onLoadEnd = (event) => {
+    console.log('!>> LOADEND', event.nativeEvent.url)
     this.props.loadEnd(event.nativeEvent);
     this.setState({
       url: event.nativeEvent.url,
@@ -70,12 +72,17 @@ class FullWebView extends React.Component {
   };
 
   onLoadStart = (event) => {
-    console.log('LOADSTART', event.nativeEvent)
+    console.log('!>> LOADSTART', event.nativeEvent.url)
     this.props.loadStart(event.nativeEvent);
     this.setState({
       url: event.nativeEvent.url,
       loading: true,
     });
+  };
+
+  onLoadResponse = (event) => {
+    console.log('!>> LOADRESPONSE', event.nativeEvent.statusCode, event.nativeEvent.url)
+    this.props.loadResponse(event.nativeEvent);
   };
 
   onProgress = (progress) => {
@@ -87,6 +94,7 @@ FullWebView.propTypes = {
   currentURL: PropTypes.string.isRequired,
   targetURL: PropTypes.string.isRequired,
   loadStart: PropTypes.func.isRequired,
+  loadResponse: PropTypes.func.isRequired,
   loadEnd: PropTypes.func.isRequired,
   loadProgress: PropTypes.func.isRequired,
 }
@@ -110,6 +118,7 @@ export default connect(
   }),
   (dispatch) => ({
     loadStart: (navState) => dispatch(actions.loadStart(navState)),
+    loadResponse: (navState) => dispatch(actions.loadResponse(navState)),
     loadEnd: (navState) => dispatch(actions.loadEnd(navState)),
     loadProgress: (progress) => dispatch(actions.loadProgress(progress)),
   })
