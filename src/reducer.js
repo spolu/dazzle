@@ -33,7 +33,9 @@ export default function reducer(state = initialState, action = {}) {
       };
 
     case constants.ACTION_LOAD_END:
-
+      if (constants.HISTORY_SKIPLIST.includes(url.domain+url.path)) {
+        return state;
+      }
       history[url.domain] = history[url.domain] || {
         hit: 0,
         pathes: {}
@@ -75,6 +77,14 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         results: computeResults('', history),
         mode: constants.MODE_COMMAND,
+      };
+
+    case constants.ACTION_COMMAND_CANCEL:
+      return {
+        ...state,
+        results: [],
+        input: '',
+        mode: constants.MODE_NAVIGATION,
       };
 
     case constants.ACTION_COMMAND_INPUT:
@@ -149,7 +159,8 @@ const computeResults = (input, history) => {
       recents.push({
         type: constants.RESULT_TYPE_HISTORY,
         target: history[domain].pathes[path].url,
-        url: url,
+        url: domain,
+        domain: domain,
         title: history[domain].pathes[path].title,
         last: history[domain].pathes[path].last,
       });

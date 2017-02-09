@@ -54,12 +54,9 @@ export function commandShow() {
   };
 }
 
-
-export function searchResults(results) {
+export function commandCancel() {
   return {
-    type: constants.ACTION_SEARCH_RESULTS,
-    payload: {
-      results: results,
-    },
+    type: constants.ACTION_COMMAND_CANCEL,
+    payload: {},
   };
 }

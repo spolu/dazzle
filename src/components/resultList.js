@@ -2,13 +2,13 @@
 
 import React, { Component, PropTypes } from 'react';
 import {
-  StyleSheet, ListView, View, Text, TouchableHighlight
+  StyleSheet, Image, ListView, View, Text, TouchableHighlight
 } from 'react-native';
-import { connect } from 'react-redux'
 import InvertibleScrollView from 'react-native-invertible-scroll-view';
+import { connect } from 'react-redux';
 
-import * as constants from '../constants.js'
-import * as actions from '../actions'
+import * as constants from '../constants.js';
+import * as actions from '../actions';
 
 class ResultList extends Component {
   constructor(props) {
@@ -37,6 +37,7 @@ class ResultList extends Component {
             renderScrollComponent={
               props => <InvertibleScrollView {...props} inverted />
             }
+            keyboardShouldPersistTaps={'handled'}
             style={styles.listView}
             enableEmptySections={true}
             dataSource={this.state.dataSource}
@@ -51,6 +52,27 @@ class ResultList extends Component {
     this.props.onCommandSelect(rowID);
   }
 
+  _renderType = (result) => {
+    switch (result.type) {
+      case constants.RESULT_TYPE_URL:
+        break;
+      case constants.RESULT_TYPE_HISTORY:
+        return(
+          <Image
+            style={styles.type}
+            source={{uri: 'http://' + result.domain + '/favicon.ico'}}
+          />
+        )
+      case constants.RESULT_TYPE_SEARCH:
+        return(
+          <View
+            style={styles.type}
+          >
+          </View>
+        )
+    }
+  }
+
   _renderRow = (result, sectionID, rowID) => {
     return(
       <TouchableHighlight
@@ -58,9 +80,19 @@ class ResultList extends Component {
         onPress={() => this._onResultPress(rowID, result)}
       >
         <View style={styles.row}>
-          <Text style={styles.type}>{result.type}</Text>
-          <Text style={styles.url}>{result.url}</Text>
-          <Text style={styles.title}>{result.title}</Text>
+          {this._renderType(result)}
+          <Text
+            numberOfLines={1}
+            style={styles.url}
+          >
+            {result.url}
+          </Text>
+          <Text
+            numberOfLines={1}
+            style={styles.title}
+          >
+            {result.title}
+          </Text>
         </View>
       </TouchableHighlight>
     )
@@ -105,11 +137,12 @@ var styles = StyleSheet.create({
   type: {
     width: 16,
     height: 16,
-    marginRight: 15
+    marginRight: 15,
   },
   url: {
     fontSize: constants.FONT_SIZE,
     color: constants.BLUE,
+    marginRight: 5,
   },
   title: {
     fontSize: constants.FONT_SIZE,

@@ -16,7 +16,7 @@ import * as actions from '../actions'
 import * as constants from '../constants'
 
 const WEBVIEW_REF = 'webview';
-const DEFAULT_URL = 'https://stripe.com';
+const DEFAULT_URL = 'https://news.ycombinator.com';
 
 class FullWebView extends React.Component {
   state = {

@@ -31,18 +31,58 @@ class CommandCenter extends Component {
         <View
           style={[
             styles.addressBar,
-            this.props.mode == constants.MODE_NAVIGATION &&
-            styles.addressBarNavigation,
             this.props.mode == constants.MODE_COMMAND &&
             styles.addressBarCommand,
           ]}
           onClick={this.onClick}
         >
-          <Text style={[
-            styles.urlText,
-            this.props.mode == constants.MODE_COMMAND &&
-            styles.urlTextCommand,
-          ]}>{this.props.domain}</Text>
+          <View
+            style={[
+              styles.urlTextContainer,
+              this.props.mode == constants.MODE_COMMAND &&
+              styles.urlTextContainerCommand,
+            ]}
+          >
+            <Text
+              style={[
+                styles.urlText
+              ]}
+            >
+              {this.props.domain}
+            </Text>
+          </View>
+
+          <View
+            style={[
+              styles.urlBarContainer,
+              this.props.mode == constants.MODE_COMMAND &&
+              styles.urlBarContainerCommand,
+            ]}
+          >
+            <TextInput
+              ref={'urlInput'}
+              autoCapitalize="none"
+              autoCorrect={false}
+              keyboardType="web-search"
+              value={this.state.input}
+              onSubmitEditing={this.onSubmitEditing}
+              onChange={this.handleTextInputChange}
+              selectTextOnFocus={true}
+              clearButtonMode="never"
+              keyboardAppearance="dark"
+              blurOnSubmit={false}
+              style={[
+                styles.textInput,
+              ]}
+            />
+            <TouchableOpacity
+              style={[styles.touchableCancel]}
+              onPress={this.props.onCommandCancel}
+              activeOpacity={0.8}
+            >
+            </TouchableOpacity>
+          </View>
+
           <Animated.View
             style={[
               styles.progressBar,
@@ -51,25 +91,6 @@ class CommandCenter extends Component {
               styles.progressBarLoading,
               this.props.mode == constants.MODE_COMMAND &&
               styles.progressBarCommand,
-            ]}
-          />
-          <TextInput
-            ref={'urlInput'}
-            autoCapitalize="none"
-            autoCorrect={false}
-            keyboardType="web-search"
-            value={this.state.input}
-            onSubmitEditing={this.onSubmitEditing}
-            onChange={this.handleTextInputChange}
-            selectTextOnFocus={true}
-            clearButtonMode="never"
-            keyboardAppearance="dark"
-            style={[
-              styles.textInput,
-              this.props.mode == constants.MODE_NAVIGATION &&
-              styles.textInputNavigation,
-              this.props.mode == constants.MODE_COMMAND &&
-              styles.textInputCommand,
             ]}
           />
         </View>
@@ -156,14 +177,18 @@ CommandCenter.propTypes = {
 var styles = StyleSheet.create({
   addressBar: {
     backgroundColor: constants.BLACK,
-    alignItems: 'center',
-  },
-  addressBarNavigation: {
     height: constants.HEIGHT_CC_NAVIGATION,
-    alignItems: 'center',
   },
   addressBarCommand: {
     height: constants.HEIGHT_CC_COMMAND,
+  },
+
+  urlTextContainer: {
+    alignItems: 'center',
+    height: constants.HEIGHT_CC_NAVIGATION,
+  },
+  urlTextContainerCommand: {
+    height: 0,
   },
   urlText: {
     height: constants.HEIGHT_CC_NAVIGATION,
@@ -171,22 +196,30 @@ var styles = StyleSheet.create({
     fontSize: constants.FONT_SIZE,
     paddingTop: 4,
   },
-  urlTextCommand: {
-    opacity: 0,
+
+  urlBarContainer: {
+    flexDirection: 'row',
     height: 0,
   },
+  urlBarContainerCommand: {
+    height: constants.HEIGHT_CC_COMMAND,
+  },
   textInput: {
-    height: constants.HEIGHT_CC_COMMAND - 10,
+    height: constants.HEIGHT_CC_COMMAND,
     backgroundColor: constants.BLACK,
-    paddingLeft: 15,
+    paddingLeft: 10,
     color: constants.WHITE,
+    flex: 1,
   },
-  textInputNavigation: {
-    opacity: 0,
+
+  touchableCancel: {
+    width: 32,
+    height: constants.HEIGHT_CC_COMMAND,
+    paddingTop: 10,
+    paddingLeft: 5,
+    backgroundColor: 'white',
   },
-  textInputCommand: {
-    opacity: 1,
-  },
+
   progressBar: {
     position: 'absolute',
     bottom: 0,
@@ -213,5 +246,6 @@ export default connect(
     onCommandPress: () => dispatch(actions.commandShow()),
     onCommandInput: (input) => dispatch(actions.commandInput(input)),
     onCommandSubmit: () => dispatch(actions.commandSelect(0)),
+    onCommandCancel: () => dispatch(actions.commandCancel()),
   })
 )(CommandCenter)
