@@ -7,12 +7,12 @@
     "test": "jest"
   },
   "dependencies": {
+    "fbjs": "^0.8.9",
     "react": "15.4.2",
     "react-native": "0.40.0",
     "react-native-blur": "^2.0.0",
     "react-native-invertible-scroll-view": "^1.0.0",
     "react-native-keyboard-spacer": "^0.3.1",
-    "react-native-wkwebview-reborn": "^1.1.0",
     "react-redux": "^5.0.2",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0"

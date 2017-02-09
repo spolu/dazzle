@@ -1,5 +1,6 @@
 # general
 
-  [ ] list view with results
+  [ ] extract error codes from load events
   [ ] history search in results
+  [x] list view with results
   [x] don't tie fullWebView resize to COMMAND mode (absolute)

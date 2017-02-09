@@ -10,7 +10,7 @@ import {
   View,
 } from 'react-native';
 import { connect } from 'react-redux';
-import WKWebView from 'react-native-wkwebview-reborn';
+import DZWebView from '../../lib/dazzle-webview';
 
 import * as actions from '../actions'
 import * as constants from '../constants'
@@ -27,7 +27,7 @@ class FullWebView extends React.Component {
   render() {
     return(
       <View style={[styles.container]}>
-        <WKWebView
+        <DZWebView
           ref={WEBVIEW_REF}
           automaticallyAdjustContentInsets={false}
           source={{uri: this.state.url}}
@@ -61,22 +61,19 @@ class FullWebView extends React.Component {
     return true;
   };
 
-  onNavigationStateChange = (navState) => {
-    this.setState({
-      url: navState.url,
-    });
-  };
-
   onLoadEnd = (event) => {
     this.props.loadEnd(event.nativeEvent);
     this.setState({
+      url: event.nativeEvent.url,
       loading: false,
     });
   };
 
   onLoadStart = (event) => {
+    console.log('LOADSTART', event.nativeEvent)
     this.props.loadStart(event.nativeEvent);
     this.setState({
+      url: event.nativeEvent.url,
       loading: true,
     });
   };

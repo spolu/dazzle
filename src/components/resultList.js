@@ -65,10 +65,11 @@ class ResultList extends Component {
         )
       case constants.RESULT_TYPE_SEARCH:
         return(
-          <View
+          <Image
+            source={require('../../images/search/search.png')}
             style={styles.type}
-          >
-          </View>
+            resizeMode={'cover'}
+          />
         )
     }
   }
@@ -125,7 +126,7 @@ var styles = StyleSheet.create({
 
   row: {
     borderTopWidth: 1,
-    borderStyle: 'dazzle',
+    borderStyle: 'solid',
     borderTopColor: constants.BLACK_TRANSPARENT,
     height: 44,
     paddingLeft: 15,

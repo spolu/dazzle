@@ -2,8 +2,8 @@
 
 import React, { Component, PropTypes } from 'react';
 import {
-  Animated, Easing, Dimensions, StyleSheet, Text, TextInput, TouchableOpacity,
-  View,
+  Animated, Easing, Dimensions, Image, StyleSheet, Text, TextInput,
+  TouchableOpacity, View,
 } from 'react-native';
 import { connect } from 'react-redux'
 
@@ -76,10 +76,15 @@ class CommandCenter extends Component {
               ]}
             />
             <TouchableOpacity
-              style={[styles.touchableCancel]}
+              style={[styles.cancelTouchable]}
               onPress={this.props.onCommandCancel}
               activeOpacity={0.8}
             >
+              <Image
+                source={require('../../images/search/cross.png')}
+                style={[styles.cancelImage]}
+                resizeMode={'cover'}
+              />
             </TouchableOpacity>
           </View>
 
@@ -212,12 +217,16 @@ var styles = StyleSheet.create({
     flex: 1,
   },
 
-  touchableCancel: {
+  cancelTouchable: {
     width: 32,
     height: constants.HEIGHT_CC_COMMAND,
-    paddingTop: 10,
-    paddingLeft: 5,
-    backgroundColor: 'white',
+    paddingTop: 12,
+    paddingLeft: 3,
+    backgroundColor: constants.BLACK,
+  },
+  cancelImage: {
+    width: 22,
+    height: 22,
   },
 
   progressBar: {
