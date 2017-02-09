@@ -3,4 +3,4 @@
 import { AppRegistry } from 'react-native';
 import App from './src/app';
 
-AppRegistry.registerComponent('Solid', () => App);
+AppRegistry.registerComponent('Dazzle', () => App);

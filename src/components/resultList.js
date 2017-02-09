@@ -125,7 +125,7 @@ var styles = StyleSheet.create({
 
   row: {
     borderTopWidth: 1,
-    borderStyle: 'solid',
+    borderStyle: 'dazzle',
     borderTopColor: constants.BLACK_TRANSPARENT,
     height: 44,
     paddingLeft: 15,

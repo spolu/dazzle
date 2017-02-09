@@ -1,4 +1,4 @@
-package com.solid;
+package com.dazzle;
 
 import android.app.Application;
 import android.util.Log;
