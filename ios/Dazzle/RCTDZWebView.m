@@ -14,6 +14,7 @@
 @interface RCTDZWebView () <WKNavigationDelegate, RCTAutoInsetsProtocol, WKScriptMessageHandler, WKUIDelegate>
 
 @property (nonatomic, copy) RCTDirectEventBlock onLoadingStart;
+@property (nonatomic, copy) RCTDirectEventBlock onLoadingResponse;
 @property (nonatomic, copy) RCTDirectEventBlock onLoadingFinish;
 @property (nonatomic, copy) RCTDirectEventBlock onLoadingError;
 @property (nonatomic, copy) RCTDirectEventBlock onShouldStartLoadWithRequest;
@@ -56,7 +57,10 @@
     _webView.UIDelegate = self;
     _webView.navigationDelegate = self;
     _webView.allowsLinkPreview = false;
-    [_webView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
+    [_webView addObserver:self
+               forKeyPath:@"estimatedProgress"
+                  options:NSKeyValueObservingOptionNew
+                  context:nil];
     [self addSubview:_webView];
   }
   return self;
@@ -78,7 +82,8 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
   [_webView loadRequest:request];
 }
 
-- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message
+- (void)userContentController:(WKUserContentController *)userContentController
+      didReceiveScriptMessage:(WKScriptMessage *)message
 {
   if (_onMessage) {
     _onMessage(@{@"name":message.name, @"body": message.body});
@@ -191,13 +196,14 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
 
 - (NSMutableDictionary<NSString *, id> *)baseEvent
 {
-  NSMutableDictionary<NSString *, id> *event = [[NSMutableDictionary alloc] initWithDictionary:@{
-                                                                                                 @"url": _webView.URL.absoluteString ?: @"",
-                                                                                                 @"loading" : @(_webView.loading),
-                                                                                                 @"title": _webView.title,
-                                                                                                 @"canGoBack": @(_webView.canGoBack),
-                                                                                                 @"canGoForward" : @(_webView.canGoForward),
-                                                                                                 }];
+  NSMutableDictionary<NSString *, id> *event =
+  [[NSMutableDictionary alloc] initWithDictionary:@{
+                                                    @"url": _webView.URL.absoluteString ?: @"",
+                                                    @"loading" : @(_webView.loading),
+                                                    @"title": _webView.title,
+                                                    @"canGoBack": @(_webView.canGoBack),
+                                                    @"canGoForward" : @(_webView.canGoForward),
+                                                    }];
   
   return event;
 }
@@ -232,11 +238,15 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
 
 #pragma mark - WKNavigationDelegate methods
 
-- (void)webView:(__unused WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
+- (void)webView:(__unused WKWebView *)webView
+decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction
+decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
 {
   NSURLRequest *request = navigationAction.request;
   NSURL* url = request.URL;
   NSString* scheme = url.scheme;
+  
+  RCTLogInfo(@"DZWebView REQUEST: %@", navigationAction.request);
   
   if (_onShouldStartLoadWithRequest) {
     NSMutableDictionary<NSString *, id> *event = [self baseEvent];
@@ -260,7 +270,6 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
       [event addEntriesFromDictionary: @{
                                          @"url": url.absoluteString,
                                          @"navigationType": @(navigationAction.navigationType),
-                                         @"scheme": scheme
                                          }];
       _onLoadingStart(event);
     }
@@ -269,7 +278,30 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
   decisionHandler(WKNavigationActionPolicyAllow);
 }
 
-- (void)webView:(__unused WKWebView *)webView didFailProvisionalNavigation:(__unused WKNavigation *)navigation withError:(NSError *)error
+- (void)webView:(WKWebView *)webView
+decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse
+decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler
+{
+  RCTLogInfo(@"DZWebView RESPONSE: %@", navigationResponse);
+  
+  if (_onLoadingResponse) {
+    if ([navigationResponse.response isKindOfClass:[NSHTTPURLResponse class]] &&
+        navigationResponse.isForMainFrame) {
+      NSHTTPURLResponse *response = (NSHTTPURLResponse *)navigationResponse.response;
+      NSMutableDictionary<NSString *, id> *event = [self baseEvent];
+      [event addEntriesFromDictionary: @{
+                                         @"url": response.URL.absoluteString,
+                                         @"statusCode": @(response.statusCode)
+                                         }];
+        _onLoadingResponse(event);
+    }
+    decisionHandler(WKNavigationResponsePolicyAllow);
+  }
+}
+
+- (void)webView:(__unused WKWebView *)webView
+didFailProvisionalNavigation:(__unused WKNavigation *)navigation
+      withError:(NSError *)error
 {
   if (_onLoadingError) {
     if ([error.domain isEqualToString:NSURLErrorDomain] && error.code == NSURLErrorCancelled) {
@@ -290,7 +322,8 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
   }
 }
 
-- (void)webView:(WKWebView *)webView didFinishNavigation:(__unused WKNavigation *)navigation
+- (void)webView:(WKWebView *)webView
+didFinishNavigation:(__unused WKNavigation *)navigation
 {
   if (_injectedJavaScript != nil) {
     [webView evaluateJavaScript:_injectedJavaScript completionHandler:^(id result, NSError *error) {
@@ -307,7 +340,10 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
 
 #pragma mark - WKUIDelegate
 
-- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler {
+- (void)webView:(WKWebView *)webView
+runJavaScriptAlertPanelWithMessage:(NSString *)message
+initiatedByFrame:(WKFrameInfo *)frame
+completionHandler:(void (^)(void))completionHandler {
   UIAlertController *alertController = [UIAlertController alertControllerWithTitle:message message:nil preferredStyle:UIAlertControllerStyleAlert];
   
   [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
@@ -317,7 +353,10 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
   [presentingController presentViewController:alertController animated:YES completion:nil];
 }
 
-- (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL))completionHandler {
+- (void)webView:(WKWebView *)webView
+runJavaScriptConfirmPanelWithMessage:(NSString *)message
+initiatedByFrame:(WKFrameInfo *)frame
+completionHandler:(void (^)(BOOL))completionHandler {
   
   // TODO We have to think message to confirm "YES"
   UIAlertController *alertController = [UIAlertController alertControllerWithTitle:message message:nil preferredStyle:UIAlertControllerStyleAlert];
@@ -331,7 +370,11 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
   [presentingController presentViewController:alertController animated:YES completion:nil];
 }
 
-- (void)webView:(WKWebView *)webView runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt defaultText:(NSString *)defaultText initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(NSString *))completionHandler {
+- (void)webView:(WKWebView *)webView
+runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt
+    defaultText:(NSString *)defaultText
+initiatedByFrame:(WKFrameInfo *)frame
+completionHandler:(void (^)(NSString *))completionHandler {
   
   UIAlertController *alertController = [UIAlertController alertControllerWithTitle:prompt message:nil preferredStyle:UIAlertControllerStyleAlert];
   [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
@@ -350,7 +393,10 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
   [presentingController presentViewController:alertController animated:YES completion:nil];
 }
 
-- (WKWebView *)webView:(WKWebView *)webView createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration forNavigationAction:(WKNavigationAction *)navigationAction windowFeatures:(WKWindowFeatures *)windowFeatures
+- (WKWebView *)webView:(WKWebView *)webView
+createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
+   forNavigationAction:(WKNavigationAction *)navigationAction
+        windowFeatures:(WKWindowFeatures *)windowFeatures
 {
   NSString *scheme = navigationAction.request.URL.scheme;
   if ((navigationAction.targetFrame.isMainFrame || _openNewWindowInWebView) && ([scheme isEqualToString:@"http"] || [scheme isEqualToString:@"https"])) {
