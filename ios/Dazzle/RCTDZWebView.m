@@ -287,7 +287,8 @@ decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler
     NSURL* url = response.URL;
     
     RCTLogInfo(@"DZWebView RESPONSE: %@", response);
-    
+        
+
     if (_onLoadingResponse) {
       // We have this check to filter out iframe requests and whatnot
       BOOL isTopFrame = [url isEqual:_webView.URL];
@@ -299,8 +300,9 @@ decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler
         _onLoadingResponse(event);
       }
     }
-    decisionHandler(WKNavigationResponsePolicyAllow);
   }
+  
+  decisionHandler(WKNavigationResponsePolicyAllow);
 }
 
 - (void)webView:(__unused WKWebView *)webView

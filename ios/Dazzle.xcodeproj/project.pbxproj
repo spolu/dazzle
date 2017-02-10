@@ -13,6 +13,8 @@
 		00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
 		00E356F31AD99517003FC87E /* DazzleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* DazzleTests.m */; };
+		0F8D42591E4D822B0093A254 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F8D42581E4D822B0093A254 /* Launch Screen.storyboard */; };
+		0F8D42821E4D875A0093A254 /* Splash@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8D42811E4D875A0093A254 /* Splash@3x.png */; };
 		0FA5DA111E4BFD690088AE86 /* RCTDZWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA5DA101E4BFD690088AE86 /* RCTDZWebView.m */; };
 		0FA5DA141E4BFDA60088AE86 /* RCTDZWebViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA5DA131E4BFDA60088AE86 /* RCTDZWebViewManager.m */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
@@ -230,6 +232,8 @@
 		00E356EE1AD99517003FC87E /* DazzleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DazzleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* DazzleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DazzleTests.m; sourceTree = "<group>"; };
+		0F8D42581E4D822B0093A254 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = "Launch Screen.storyboard"; path = "Dazzle/Launch Screen.storyboard"; sourceTree = "<group>"; };
+		0F8D42811E4D875A0093A254 /* Splash@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Splash@3x.png"; sourceTree = "<group>"; };
 		0FA5DA0F1E4BFD4F0088AE86 /* RCTDZWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RCTDZWebView.h; path = Dazzle/RCTDZWebView.h; sourceTree = "<group>"; };
 		0FA5DA101E4BFD690088AE86 /* RCTDZWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RCTDZWebView.m; path = Dazzle/RCTDZWebView.m; sourceTree = "<group>"; };
 		0FA5DA121E4BFD880088AE86 /* RCTDZWebViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RCTDZWebViewManager.h; path = Dazzle/RCTDZWebViewManager.h; sourceTree = "<group>"; };
@@ -340,6 +344,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		0F8D42661E4D873F0093A254 /* Launch Screen */ = {
+			isa = PBXGroup;
+			children = (
+				0F8D42581E4D822B0093A254 /* Launch Screen.storyboard */,
+				0F8D42811E4D875A0093A254 /* Splash@3x.png */,
+			);
+			name = "Launch Screen";
+			sourceTree = "<group>";
+		};
 		0FA5D9031E4573E00088AE86 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -380,6 +393,7 @@
 		13B07FAE1A68108700A75B9A /* Dazzle */ = {
 			isa = PBXGroup;
 			children = (
+				0F8D42661E4D873F0093A254 /* Launch Screen */,
 				0FA5DA0E1E4BFD230088AE86 /* DZWebView */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -797,6 +811,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F8D42821E4D875A0093A254 /* Splash@3x.png in Resources */,
+				0F8D42591E4D822B0093A254 /* Launch Screen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
