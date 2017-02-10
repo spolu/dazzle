@@ -21,6 +21,16 @@ export const RESULT_TYPE_URL = 'RESULT_TYPE_URL';
 export const RESULT_TYPE_HISTORY = 'RESULT_TYPE_HISTORY';
 export const RESULT_TYPE_SEARCH = 'RESULT_TYPE_SEARCH';
 
+// Search shortcuts
+export const SEARCH_SHORTCUTS = {
+  'fa': ['facebook.com', 'https://facebook.com'],
+  're': ['reddit.com', 'https://reddit.com'],
+  'hn': ['news.ycombinator.com', 'https://news.ycombinator.com'],
+  'gm': ['gmail.com', 'https://gmail.com'],
+  'sl': ['slack.com', 'https://slack.com'],
+  'tw': ['twitter.com', 'https://twitter.com'],
+}
+
 // Result histoy SKIPLIST
 export const HISTORY_SKIPLIST = [
   'www.google.com/search',

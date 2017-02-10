@@ -1,6 +1,6 @@
 'use strict'
 
-import * as constants from './constants.js'
+import * as constants from './constants'
 
 export function loadStart(navState) {
   return {

@@ -1,6 +1,7 @@
 'use strict'
 
-import * as constants from './constants.js'
+import * as constants from './constants'
+import {computeResults} from './results'
 
 const initialState = {
   mode: constants.MODE_NAVIGATION,  // The initial mode of the app.
@@ -150,93 +151,6 @@ export default function reducer(state = initialState, action = {}) {
     default:
       return state;
   }
-}
-
-const inputURLRegexp =
-  /^(https?:\/\/)?([-a-zA-Z0-9@%._\+~#=]{2,512}\.([a-z]{2,4}))\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/
-
-// computeResults recomputes the results to show in COMMAND mode based on the
-// current input value and history.
-const computeResults = (input, state) => {
-  let results = [];
-  input = input.trim();
-  let history = state.history;
-
-  // If the input is not empty push result and url results.
-  if (input.length > 0) {
-    let url = inputURLRegexp.exec(input);
-    // TODO check against a list of TLDs
-    if (url != null) {
-      results.push({
-        type: constants.RESULT_TYPE_URL,
-        target: (url[1] ? '' : 'http://') + url[0],
-        url: url[0],
-        title: '',
-      });
-    }
-
-    const searchURL = 'https://www.google.com/search?&ie=UTF-8&q=' +
-      encodeURIComponent(input)
-    results.push({
-      type: constants.RESULT_TYPE_SEARCH,
-      target: searchURL,
-      url: '',
-      title: input,
-    })
-  }
-
-  if (state.isLoading) {
-    results.push({
-      type: constants.RESULT_TYPE_URL,
-      target: state.currentURL,
-      url: state.domain,
-      title: '',
-    })
-  }
-
-  let recents = [];
-  for (let domain in history) {
-    for (let path in history[domain].pathes) {
-      let url = domain;
-      if (path != '/') {
-        url += path;
-      }
-
-      let match = true;
-      if (input.length > 0) {
-        input.split(' ').forEach(t => {
-          let r = new RegExp(t.trim(), 'i');
-          if (!history[domain].pathes[path].url.match(r) &&
-            !history[domain].pathes[path].title.match(r)) {
-            match = false;
-          }
-        })
-      }
-
-      if (match) {
-        recents.push({
-          type: constants.RESULT_TYPE_HISTORY,
-          target: history[domain].pathes[path].url,
-          url: domain,
-          domain: domain,
-          title: history[domain].pathes[path].title,
-          last: history[domain].pathes[path].last,
-        });
-      }
-    }
-  }
-  recents.sort((a, b) => {
-    if (a.last < b.last) {
-      return 1;
-    } else {
-      return -1;
-    }
-  });
-  recents.forEach(r => {
-    results.push(r);
-  })
-
-  return results;
 }
 
 // parseURL parses an URL into an object with domain, scheme, path, fragment
