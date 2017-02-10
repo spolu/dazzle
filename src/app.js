@@ -1,17 +1,31 @@
 'use strict'
 
 import React, { Component } from 'react';
-import { StyleSheet, View, Platform, StatusBar } from 'react-native';
+import {
+  AsyncStorage, StyleSheet, View, Platform, StatusBar,
+} from 'react-native';
 
 import LayoutManager from './components/layoutManager';
 
-import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { compose, createStore, applyMiddleware, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
+import { persistStore, autoRehydrate } from 'redux-persist'
 import thunk from 'redux-thunk'
-import reducer from './reducer';
-import * as constants from './constants'
 
-const store = applyMiddleware(thunk)(createStore)(reducer);
+import reducer from './reducer';
+import * as constants from './constants';
+
+const store = createStore(
+  reducer,
+  undefined,
+  compose(
+    applyMiddleware(thunk),
+    autoRehydrate(),
+  )
+);
+
+// Begin periodically persisting the store.
+persistStore(store, {storage: AsyncStorage});
 
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : 0;
 

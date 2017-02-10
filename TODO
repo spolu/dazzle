@@ -1,5 +1,6 @@
 # general
 
+  [?] persistence
   [ ] debug on device google login
   [x] history search in results
   [x] introduce pending in state (make it searchable)

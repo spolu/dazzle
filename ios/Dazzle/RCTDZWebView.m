@@ -282,12 +282,11 @@ decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
 decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse
 decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler
 {
+  RCTLogInfo(@"DZWebView RESPONSE: %@", navigationResponse);
+  
   if ([navigationResponse.response isKindOfClass:[NSHTTPURLResponse class]]) {
     NSHTTPURLResponse *response = (NSHTTPURLResponse *)navigationResponse.response;
     NSURL* url = response.URL;
-    
-    RCTLogInfo(@"DZWebView RESPONSE: %@", response);
-        
 
     if (_onLoadingResponse) {
       // We have this check to filter out iframe requests and whatnot
@@ -408,6 +407,8 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
    forNavigationAction:(WKNavigationAction *)navigationAction
         windowFeatures:(WKWindowFeatures *)windowFeatures
 {
+  RCTLogInfo(@"DZWebView CREATE: %@", navigationAction);
+
   NSString *scheme = navigationAction.request.URL.scheme;
   if ((navigationAction.targetFrame.isMainFrame || _openNewWindowInWebView) && ([scheme isEqualToString:@"http"] || [scheme isEqualToString:@"https"])) {
     [webView loadRequest:navigationAction.request];
