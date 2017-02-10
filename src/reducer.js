@@ -10,6 +10,7 @@ const initialState = {
   loadingProgress: 0,               // current loading progress.
   targetURL: '',                    // requested URL by the user.
   currentURL: '',                   // the current URL of the webview.
+  currentStatusCode: 200,           // status code of the current request.
   input: '',                        // the current command input value.
   results: [],                      // Resuts shown in the result list.
   history: {}                       // Navigation history.
@@ -30,12 +31,28 @@ export default function reducer(state = initialState, action = {}) {
         loadingProgress: 0,
         domain: url.domain,
         currentURL: navState.url,
+        currentStatusCode: 200,
       };
+
+    case constants.ACTION_LOAD_RESPONSE:
+      if (state.isLoading && state.currentURL == navState.url) {
+        return {
+          ...state,
+          currentStatusCode: navState.statusCode,
+        };
+      } else {
+        return state;
+      }
 
     case constants.ACTION_LOAD_END:
       if (constants.HISTORY_SKIPLIST.includes(url.domain+url.path)) {
         return state;
       }
+      // Don't store non 20x results in history.
+      if (state.currentStatusCode >= 300) {
+        return state;
+      }
+
       history[url.domain] = history[url.domain] || {
         hit: 0,
         pathes: {}
@@ -71,11 +88,11 @@ export default function reducer(state = initialState, action = {}) {
 
 
     case constants.ACTION_COMMAND_SHOW:
-      let results = computeResults('', history)
+      let results = computeResults('', state)
 
       return {
         ...state,
-        results: computeResults('', history),
+        results: computeResults('', state),
         mode: constants.MODE_COMMAND,
       };
 
@@ -91,7 +108,7 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         input: action.payload.input,
-        results: computeResults(action.payload.input, history),
+        results: computeResults(action.payload.input, state),
       };
 
     case constants.ACTION_COMMAND_SELECT:
@@ -122,22 +139,24 @@ const inputURLRegexp =
 
 // computeResults recomputes the results to show in COMMAND mode based on the
 // current input value and history.
-const computeResults = (input, history) => {
+const computeResults = (input, state) => {
   let results = [];
   input = input.trim();
+  let history = state.history;
 
-  let url = inputURLRegexp.exec(input);
-  // TODO check against a list of TLDs
-  if (url != null) {
-    results.push({
-      type: constants.RESULT_TYPE_URL,
-      target: (url[1] ? '' : 'http://') + url[0],
-      url: url[0],
-      title: '',
-    });
-  }
-
+  // If the input is not empty push result and url results.
   if (input.length > 0) {
+    let url = inputURLRegexp.exec(input);
+    // TODO check against a list of TLDs
+    if (url != null) {
+      results.push({
+        type: constants.RESULT_TYPE_URL,
+        target: (url[1] ? '' : 'http://') + url[0],
+        url: url[0],
+        title: '',
+      });
+    }
+
     const searchURL = 'https://www.google.com/search?&ie=UTF-8&q=' +
       encodeURIComponent(input)
     results.push({
@@ -145,6 +164,15 @@ const computeResults = (input, history) => {
       target: searchURL,
       url: '',
       title: input,
+    })
+  }
+
+  if (state.isLoading) {
+    results.push({
+      type: constants.RESULT_TYPE_URL,
+      target: state.currentURL,
+      url: state.domain,
+      title: '',
     })
   }
 
@@ -156,14 +184,23 @@ const computeResults = (input, history) => {
         url += path;
       }
 
-      recents.push({
-        type: constants.RESULT_TYPE_HISTORY,
-        target: history[domain].pathes[path].url,
-        url: domain,
-        domain: domain,
-        title: history[domain].pathes[path].title,
-        last: history[domain].pathes[path].last,
-      });
+      let match = true;
+      if (input.length > 0) {
+        input.split(' ').forEach(t => {
+          t = t.trim();
+        })
+      }
+
+      if (match) {
+        recents.push({
+          type: constants.RESULT_TYPE_HISTORY,
+          target: history[domain].pathes[path].url,
+          url: domain,
+          domain: domain,
+          title: history[domain].pathes[path].title,
+          last: history[domain].pathes[path].last,
+        });
+      }
     }
   }
   recents.sort((a, b) => {

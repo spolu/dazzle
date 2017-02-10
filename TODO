@@ -1,8 +1,9 @@
 # general
 
-  [ ] introduce pending in state (make it searchable)
-  [ ] commit pending only if 200 and loadEnd
+  [ ] debug on device google login
   [ ] history search in results
+  [x] introduce pending in state (make it searchable)
+  [x] commit pending only if 200 and loadEnd
   [x] extract error codes from load events
   [x] list view with results
   [x] don't tie fullWebView resize to COMMAND mode (absolute)
