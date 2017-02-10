@@ -25,108 +25,126 @@ export default function reducer(state = initialState, action = {}) {
 
   switch (action.type) {
     case constants.ACTION_LOAD_START:
-      return {
-        ...state,
-        isLoading: true,
-        loadingProgress: 0,
-        domain: url.domain,
-        currentURL: navState.url,
-        currentStatusCode: 200,
-      };
+      {
+        let updated = {
+          ...state,
+          isLoading: true,
+          loadingProgress: 0,
+          domain: url.domain,
+          currentURL: navState.url,
+          currentStatusCode: 200,
+        };
+        updated.results =  computeResults(updated.input, updated);
+        return updated;
+      }
 
     case constants.ACTION_LOAD_RESPONSE:
-      if (state.isLoading && state.currentURL == navState.url) {
-        return {
-          ...state,
-          currentStatusCode: navState.statusCode,
-        };
-      } else {
-        return state;
+      {
+        if (state.isLoading && state.currentURL == navState.url) {
+          return {
+            ...state,
+            currentStatusCode: navState.statusCode,
+          };
+        } else {
+          return state;
+        }
       }
 
     case constants.ACTION_LOAD_END:
-      if (constants.HISTORY_SKIPLIST.includes(url.domain+url.path)) {
-        return state;
-      }
-      // Don't store non 20x results in history.
-      if (state.currentStatusCode >= 300) {
-        return state;
-      }
+      {
+        if (constants.HISTORY_SKIPLIST.includes(url.domain+url.path)) {
+          return state;
+        }
+        // Don't store non 20x results in history.
+        if (state.currentStatusCode >= 300) {
+          return state;
+        }
 
-      history[url.domain] = history[url.domain] || {
-        hit: 0,
-        pathes: {}
-      };
-      history[url.domain].hit += 1;
-      history[url.domain].last = Date.now();
-
-      history[url.domain].pathes[url.path] =
-        history[url.domain].pathes[url.path] || {
+        history[url.domain] = history[url.domain] || {
           hit: 0,
-          title: ''
+          pathes: {}
         };
-      history[url.domain].pathes[url.path].url = url.raw;
-      history[url.domain].pathes[url.path].hit += 1;
-      history[url.domain].pathes[url.path].title = navState.title || '';
-      history[url.domain].pathes[url.path].last = Date.now();
+        history[url.domain].hit += 1;
+        history[url.domain].last = Date.now();
 
-      return {
-        ...state,
-        isLoading: false,
-        loadingProgress: 1,
-        domain: url.domain,
-        history: history,
-        currentURL: navState.url,
-      };
+        history[url.domain].pathes[url.path] =
+          history[url.domain].pathes[url.path] || {
+            hit: 0,
+            title: ''
+          };
+        history[url.domain].pathes[url.path].url = url.raw;
+        history[url.domain].pathes[url.path].hit += 1;
+        history[url.domain].pathes[url.path].title = navState.title || '';
+        history[url.domain].pathes[url.path].last = Date.now();
+
+        let updated = {
+          ...state,
+          isLoading: false,
+          loadingProgress: 1,
+          domain: url.domain,
+          history: history,
+          currentURL: navState.url,
+        };
+        updated.results =  computeResults(updated.input, updated);
+        return updated;
+      }
 
     case constants.ACTION_LOAD_PROGRESS:
-
-      return {
-        ...state,
-        loadingProgress: progress,
-      };
-
+      {
+        return {
+          ...state,
+          loadingProgress: progress,
+        };
+      }
 
     case constants.ACTION_COMMAND_SHOW:
-      let results = computeResults('', state)
+      {
+        let results = computeResults('', state)
 
-      return {
-        ...state,
-        results: computeResults('', state),
-        mode: constants.MODE_COMMAND,
-      };
+        return {
+          ...state,
+          results: computeResults('', state),
+          mode: constants.MODE_COMMAND,
+        };
+      }
 
     case constants.ACTION_COMMAND_CANCEL:
-      return {
-        ...state,
-        results: [],
-        input: '',
-        mode: constants.MODE_NAVIGATION,
-      };
+      {
+        return {
+          ...state,
+          results: [],
+          input: '',
+          mode: constants.MODE_NAVIGATION,
+        };
+      }
 
     case constants.ACTION_COMMAND_INPUT:
-      return {
-        ...state,
-        input: action.payload.input,
-        results: computeResults(action.payload.input, state),
-      };
+      {
+        return {
+          ...state,
+          input: action.payload.input,
+          results: computeResults(action.payload.input, state),
+        };
+      }
 
     case constants.ACTION_COMMAND_SELECT:
-      if (index < state.results.length) {
-        return {
-          ...state,
-          results: [],
-          input: '',
-          targetURL: state.results[index].target,
-          mode: constants.MODE_NAVIGATION,
-        };
-      } else {
-        return {
-          ...state,
-          results: [],
-          input: '',
-          mode: constants.MODE_NAVIGATION,
-        };
+      {
+        if (index < state.results.length) {
+          return {
+            ...state,
+            results: [],
+            input: '',
+            targetURL: state.results[index].target,
+            mode: constants.MODE_NAVIGATION,
+          };
+        } else {
+          return {
+            ...state,
+            results: [],
+            input: '',
+            mode: constants.MODE_NAVIGATION,
+          };
+        }
       }
 
     default:
@@ -187,7 +205,11 @@ const computeResults = (input, state) => {
       let match = true;
       if (input.length > 0) {
         input.split(' ').forEach(t => {
-          t = t.trim();
+          let r = new RegExp(t.trim(), 'i');
+          if (!history[domain].pathes[path].url.match(r) &&
+            !history[domain].pathes[path].title.match(r)) {
+            match = false;
+          }
         })
       }
 
