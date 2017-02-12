@@ -22,7 +22,7 @@ export default function reducer(state = initialState, action = {}) {
   const url = navState ? parseURL(navState.url) : null;
   const progress = (action.payload) ? action.payload.progress : null;
   const index = (action.payload) ? action.payload.index : null;
-  const history = state.history;
+  const history = Object.assign({}, state.history);
 
   switch (action.type) {
     case constants.ACTION_LOAD_START:

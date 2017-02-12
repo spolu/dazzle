@@ -15,14 +15,10 @@ import thunk from 'redux-thunk'
 import reducer from './reducer';
 import * as constants from './constants';
 
-const store = createStore(
-  reducer,
-  undefined,
-  compose(
-    applyMiddleware(thunk),
-    autoRehydrate(),
-  )
-);
+const store = compose(
+  applyMiddleware(thunk),
+  autoRehydrate(),
+)(createStore)(reducer);
 
 // Begin periodically persisting the store.
 persistStore(store, {storage: AsyncStorage});
@@ -59,3 +55,4 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+

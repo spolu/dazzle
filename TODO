@@ -1,7 +1,7 @@
 # general
 
-  [?] persistence
   [ ] debug on device google login
+  [x] make persistence work
   [x] history search in results
   [x] introduce pending in state (make it searchable)
   [x] commit pending only if 200 and loadEnd
