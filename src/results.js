@@ -98,13 +98,6 @@ export function computeResults(input, state) {
     results.push(r);
   })
 
-  // If we have hits from recents, prioritize them.
-  if (input.length > 1 && recents.length > 0 && !isURL) {
-    var r0 = results[0]
-    results[0] = results[1];
-    results[1] = r0;
-  }
-
   return results;
 }
 

@@ -136,6 +136,7 @@ export default function reducer(state = initialState, action = {}) {
             results: [],
             input: '',
             targetURL: state.results[index].target,
+            currentURL: state.results[index].target,
             mode: constants.MODE_NAVIGATION,
           };
         } else {

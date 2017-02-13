@@ -37,6 +37,7 @@ class LayoutManager extends Component {
             styles.vibrancyContainerCommand,
           ]}
           blurType={"dark"}
+          blurAmount={20}
         >
           <View
             style={[

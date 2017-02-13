@@ -29,6 +29,8 @@ export const SEARCH_SHORTCUTS = {
   'gm': ['gmail.com', 'https://gmail.com'],
   'sl': ['slack.com', 'https://slack.com'],
   'tw': ['twitter.com', 'https://twitter.com'],
+  'ny': ['nytimes.com', 'https://nytimes.com'],
+  'wi': ['wired.com', 'https://wired.com'],
 }
 
 // Result histoy SKIPLIST
