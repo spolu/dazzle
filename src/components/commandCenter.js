@@ -218,15 +218,13 @@ var styles = StyleSheet.create({
   },
 
   cancelTouchable: {
-    width: 32,
+    width: 44,
     height: constants.HEIGHT_CC_COMMAND,
-    paddingTop: 12,
-    paddingLeft: 3,
-    backgroundColor: constants.BLACK,
+    padding: 10,
   },
   cancelImage: {
-    width: 22,
-    height: 22,
+    width: 24,
+    height: 24,
   },
 
   progressBar: {
@@ -235,7 +233,7 @@ var styles = StyleSheet.create({
     height: 0,
     height: 1,
     left: 0,
-    backgroundColor: constants.RED,
+    backgroundColor: constants.BLUE,
   },
   progressBarCommand: {
     height: 0,

@@ -39,11 +39,13 @@ export const HISTORY_SKIPLIST = [
 ];
 
 // Styles
+export const BORDER_RADIUS = 8;
 export const FONT_SIZE = 16;
 
 // Colors
 export const BLACK = '#000000';
-export const BLACK_TRANSPARENT = BLACK + '20';
+export const BLACK_TRANSPARENT = BLACK + '30';
+export const GRAY = '#444';
 export const WHITE = '#ffffff';
 
 export const RED = '#ff3b53';
