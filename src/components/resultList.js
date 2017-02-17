@@ -30,20 +30,17 @@ class ResultList extends Component {
 
   render() {
     return (
-      <View style={styles.container} >
-        <View style={styles.expander} />
-        <View style={styles.wrapper}>
-          <ListView
-            renderScrollComponent={
-              props => <InvertibleScrollView {...props} inverted />
-            }
-            keyboardShouldPersistTaps={'handled'}
-            style={styles.listView}
-            enableEmptySections={true}
-            dataSource={this.state.dataSource}
-            renderRow={this._renderRow}
-          />
-        </View>
+      <View style={styles.container}>
+        <ListView
+          renderScrollComponent={
+            props => <InvertibleScrollView {...props} inverted />
+          }
+          keyboardShouldPersistTaps={'handled'}
+          style={styles.listView}
+          enableEmptySections={true}
+          dataSource={this.state.dataSource}
+          renderRow={this._renderRow}
+        />
       </View>
     );
   }
@@ -55,45 +52,41 @@ class ResultList extends Component {
   _renderType = (result) => {
     switch (result.type) {
       case constants.RESULT_TYPE_URL:
-        break;
+        return (
+          <Image
+            source={require('../../images/search/url_result.png')}
+            style={styles.type, styles.typeIcon}
+          />
+        )
       case constants.RESULT_TYPE_HISTORY:
-        return(
+        return (
           <Image
             style={styles.type}
             source={{uri: 'http://' + result.domain + '/favicon.ico'}}
+            defaultSource={require('../../images/search/url_result.png')}
           />
         )
       case constants.RESULT_TYPE_SEARCH:
-        return(
+        return (
           <Image
             source={require('../../images/search/search.png')}
-            style={styles.type}
-            resizeMode={'cover'}
+            style={styles.type, styles.typeIcon}
           />
         )
     }
   }
 
   _renderRow = (result, sectionID, rowID) => {
-    return(
+    return (
       <TouchableHighlight
-        underlayColor={'#ccc'}
+        underlayColor={constants.BLACK_TRANSPARENT}
         onPress={() => this._onResultPress(rowID, result)}
       >
         <View style={styles.row}>
           {this._renderType(result)}
-          <Text
-            numberOfLines={1}
-            style={styles.url}
-          >
-            {result.url}
-          </Text>
-          <Text
-            numberOfLines={1}
-            style={styles.title}
-          >
-            {result.title}
-          </Text>
+          <View style={styles.result}>
+            {this._renderResult(result.title, result.url)}
+          </View>
         </View>
       </TouchableHighlight>
     )
@@ -101,6 +94,61 @@ class ResultList extends Component {
 
   _rowHasChanged = (r1, r2) => {
     return r1 !== r2;
+  }
+
+  _maybeRenderUrl = (url) => {
+    if (url.length > 0) {
+      return (
+        <Text
+          numberOfLines={1}
+          style={styles.url}
+        >
+          {url}
+        </Text>
+      );
+    }
+  }
+
+  _maybeRenderTitle = (title) => {
+    if (title.length > 0) {
+      return (
+        <Text
+          numberOfLines={1}
+          style={styles.title}
+        >
+          {title}
+        </Text>
+      );
+    }
+  }
+
+  _renderResult = (title, url) => {
+    const titleExists = title.length > 0;
+    const urlExists = url.length > 0;
+
+    return (
+      <View>
+        <Text
+          numberOfLines={1}
+          style={[
+            styles.title,
+            !titleExists && styles.noTitle,
+          ]}
+        >
+          {title}
+        </Text>
+        <Text
+          numberOfLines={1}
+          style={[
+            styles.url,
+            !urlExists && styles.noUrl,
+            (!titleExists && urlExists) && styles.urlOnly
+          ]}
+        >
+          {url}
+        </Text>
+      </View>
+    );
   }
 }
 
@@ -113,23 +161,17 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  expander: {
-    flex: 1,
-  },
-  wrapper: {
-    flex: 0,
-  },
 
   listView: {
+    flex: 1,
     backgroundColor: 'transparent',
   },
 
   row: {
-    borderTopWidth: 1,
+    borderTopWidth: 0.5,
     borderStyle: 'solid',
     borderTopColor: constants.BLACK_TRANSPARENT,
-    height: 44,
-    paddingLeft: 15,
+    height: constants.HEIGHT_CC_COMMAND,
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
@@ -138,16 +180,35 @@ var styles = StyleSheet.create({
   type: {
     width: 16,
     height: 16,
-    marginRight: 15,
+    margin: 12,
   },
+  typeIcon: {
+    width: 24,
+    height: 24,
+    margin: 8,
+  },
+  result: {
+    flexDirection: 'column',
+  },
+
   url: {
-    fontSize: constants.FONT_SIZE,
+    fontSize: constants.FONT_SIZE - 4,
     color: constants.BLUE,
-    marginRight: 5,
+    marginRight: 10,
   },
+  noUrl: {
+    height: 0,
+  },
+  urlOnly: {
+    fontSize: constants.FONT_SIZE,
+  },
+
   title: {
     fontSize: constants.FONT_SIZE,
     color: constants.WHITE,
+  },
+  noTitle: {
+    height: 0,
   },
 })
 
