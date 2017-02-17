@@ -125,42 +125,29 @@ class ResultList extends Component {
     const titleExists = title.length > 0;
     const urlExists = url.length > 0;
 
-    if (urlExists && titleExists) {
-      return (
-        <View>
-          <Text
-            numberOfLines={1}
-            style={styles.title}
-          >
-            {title}
-          </Text>
-          <Text
-            numberOfLines={1}
-            style={styles.url}
-          >
-            {url}
-          </Text>
-        </View>
-      );
-    } else if (titleExists) {
-      return (
+    return (
+      <View>
         <Text
           numberOfLines={1}
-          style={styles.title}
+          style={[
+            styles.title,
+            !titleExists && styles.noTitle,
+          ]}
         >
           {title}
         </Text>
-      );
-    } else if (urlExists) {
-      return (
         <Text
           numberOfLines={1}
-          style={[styles.url, styles.urlOnly]}
+          style={[
+            styles.url,
+            !urlExists && styles.noUrl,
+            (!titleExists && urlExists) && styles.urlOnly
+          ]}
         >
           {url}
         </Text>
-      );
-    }
+      </View>
+    );
   }
 }
 
@@ -202,17 +189,25 @@ var styles = StyleSheet.create({
   result: {
     flexDirection: 'column',
   },
+
   url: {
     fontSize: constants.FONT_SIZE - 4,
     color: constants.BLUE,
     marginRight: 10,
   },
+  noUrl: {
+    height: 0,
+  },
   urlOnly: {
     fontSize: constants.FONT_SIZE,
   },
+
   title: {
     fontSize: constants.FONT_SIZE,
     color: constants.WHITE,
+  },
+  noTitle: {
+    height: 0,
   },
 })
 
