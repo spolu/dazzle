@@ -63,6 +63,7 @@ class ResultList extends Component {
           <Image
             style={styles.type}
             source={{uri: 'http://' + result.domain + '/favicon.ico'}}
+            defaultSource={require('../../images/search/url_result.png')}
           />
         )
       case constants.RESULT_TYPE_SEARCH:
