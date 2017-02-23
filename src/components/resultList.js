@@ -195,12 +195,15 @@ var styles = StyleSheet.create({
     fontSize: constants.FONT_SIZE - 4,
     color: constants.BLUE,
     marginRight: 10,
+    marginBottom: 2,
   },
   noUrl: {
     height: 0,
+    marginBottom: 0,
   },
   urlOnly: {
     fontSize: constants.FONT_SIZE,
+    marginBottom: 0,
   },
 
   title: {
