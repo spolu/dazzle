@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
+    <title>1</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Splash" transform="translate(-580.000000, -268.000000)">
+            <g id="Size" transform="translate(580.000000, 268.000000)">
+                <path d="M15,4.99531509 C15,2.23647875 17.230835,0 19.9985481,0 L44.0014519,0 C46.7620738,0 49,2.2402674 49,4.99531509 L49,59.0046849 C49,61.7635213 46.769165,64 44.0014519,64 L19.9985481,64 C17.2379262,64 15,61.7597326 15,59.0046849 L15,4.99531509 Z M16,8.99091407 L16,55.0090859 C16,56.1109357 16.896211,57 18.0017433,57 L45.9982567,57 C47.1107383,57 48,56.1086374 48,55.0090859 L48,8.99091407 C48,7.88906428 47.103789,7 45.9982567,7 L18.0017433,7 C16.8892617,7 16,7.89136259 16,8.99091407 Z" id="Combined-Shape" fill="#6F7D94"></path>
+                <rect id="Combined-Shape" fill="#FFFFFF" x="17" y="10" width="30" height="44" rx="3"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

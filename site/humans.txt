@@ -1,0 +1,7 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+    Antoine Llorca -- https://twitter.com/llorca
+    Stanislas Polu -- https://twitter.com/spolu
