@@ -55,7 +55,7 @@ class ResultList extends Component {
         return (
           <Image
             source={require('../../images/search/url_result.png')}
-            style={styles.type, styles.typeIcon}
+            style={styles.type}
           />
         )
       case constants.RESULT_TYPE_HISTORY:
@@ -70,7 +70,7 @@ class ResultList extends Component {
         return (
           <Image
             source={require('../../images/search/search.png')}
-            style={styles.type, styles.typeIcon}
+            style={styles.type}
           />
         )
     }
@@ -178,14 +178,10 @@ var styles = StyleSheet.create({
   },
 
   type: {
-    width: 16,
-    height: 16,
-    margin: 12,
-  },
-  typeIcon: {
     width: 24,
     height: 24,
     margin: 8,
+    borderRadius: 4,
   },
   result: {
     flexDirection: 'column',
