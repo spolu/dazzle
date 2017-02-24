@@ -68,6 +68,10 @@ body {
                sans-serif;
 }
 
+p {
+  margin: 0 0 0.5rem;
+}
+
 h4 {
   margin: 0 0 0.5rem;
   font-style: italic;
@@ -84,19 +88,29 @@ h4 {
 }
 
 .demo {
-  display: none;
+  /*display: none;*/
   width: 436px;
   height: 889px;
   background: url("../img/iphone.png") no-repeat center;
   background-size: 100% auto;
   margin-right: 3rem;
   padding: 50px 0;
+  position: relative;
+}
+
+.demo video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 375px;
+  height: 667px;
+  margin-top: 3px;
 }
 
 .content {
   max-width: 400px;
-
-  padding: 3rem 1rem;
+  padding: 3rem 2rem 3rem 1rem;
 }
 
 .logo {
@@ -104,7 +118,7 @@ h4 {
   height: 97px;
   background: url("../img/logo.png") no-repeat center;
   background-size: 100% auto;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   margin-left: -7px;
 }
 
@@ -113,8 +127,18 @@ h4 {
   height: 22px;
   background: url("../img/tagline.png") no-repeat center;
   background-size: 100% auto;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
   margin-left: 16px;
+}
+
+.description {
+  width: 280px;
+  margin: 0 0 40px 14px;
+  color: #c5cbd4;
+}
+
+.description p {
+  font-style: italic;
 }
 
 .features {
@@ -152,13 +176,9 @@ footer {
 
 .app-store {
   display: block;
-  background: url("../img/app-store.svg") no-repeat center;
-  background-size: 100% auto;
+  margin-left: 16px;
   transition: opacity 200ms ease-in-out;
   will-change: opacity;
-  width: 133px;
-  height: 44px;
-  margin-left: 16px;
   opacity: 1;
 }
 
@@ -176,7 +196,7 @@ footer {
 }
 
 .author {
-  display: block;
+  display: inline-block;
   border-radius: 4px;
   padding: 0 3px;
   background-color: rgba(255, 255, 255, 0.15);
@@ -204,9 +224,21 @@ footer {
   transition: none;
 }
 
+@media only screen and (max-width: 375px) {
+  .app-store,
+  .app-store img {
+    width: 100%;
+  }
+}
+
 @media only screen and (max-width: 768px) {
   .demo {
     display: none;
+  }
+
+  .content {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
   }
 }
 

@@ -1,21 +1,27 @@
 <!doctype html>
-<html class="no-js" lang="">
+<html class="no-js" lang="en-US">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Dazzle</title>
-    <meta name="description" content="Let the web shine.">
+    <meta name="description" content="Dazzle is a mobile web browser engineered from first principles. Let the web shine.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Facebook -->
     <!-- <meta property="og:url" content="" /> -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Dazzle" />
-    <meta property="og:description" content="Let the web shine." />
+    <meta property="og:title" content="Dazzle Browser" />
+    <meta property="og:description" content="Dazzle is a mobile web browser engineered from first principles. Let the web shine." />
     <meta property="og:image" content="ogp.png" />
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary" />
+    <!-- <meta name="twitter:site" content="@dazzlebrowser" /> -->
+    <meta name="twitter:title" content="Dazzle Browser" />
+    <meta name="twitter:description" content="Dazzle is a mobile web browser engineered from first principles. Let the web shine." />
+    <meta name="twitter:image" content="tile.png" />
+
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <!-- Place favicon.ico in the root directory -->
     <link rel="icon" type="image/png" href="favicon.png">
 
     <link rel="stylesheet" href="css/normalize.css">
@@ -24,11 +30,25 @@
   </head>
   <body>
     <div class="container">
-      <div class="demo"></div>
+      <div class="demo">
+        <video src="video.webm" autoplay poster="img/poster.png">
+          Sorry, your browser doesn't support embedded videos,
+          but don't worry, you can <a href="video.webm">download it</a>
+          and watch it with your favorite video player!
+        </video>
+      </div>
 
       <div class="content">
         <div class="logo"></div>
         <div class="tagline"></div>
+
+        <div class="description">
+          <p>
+            Dazzle is a mobile web browser engineered from first principles.
+          </p>
+          — <a href="https://twitter.com/spolu" target="_blank" class="author">@spolu</a>
+          & <a href="https://twitter.com/llorca" target="_blank" class="author">@llorca</a>
+        </div>
 
         <div class="features">
           <div class="feature full-web">
@@ -37,20 +57,18 @@
           </div>
           <div class="feature one-handed">
             <h4>One-handed Usage</h4>
-            Tap the URL to access search and history. Use swipe gestures to go back and forth.
+            Tap the URL to access search and history. Long-press it to show share extensions.
           </div>
           <div class="feature one-search">
             <h4>One Search, One List</h4>
-            History, tabs, favorites, search. All-in-one, accessible through a single field.
+            History, tabs, Google search. All-in-one, accessible through a single field.
           </div>
         </div>
 
         <footer>
-          <a href="javascript:void(0);" class="app-store"></a>
-          <div class="authors">
-            <a href="https://twitter.com/spolu" target="_blank" class="author">@spolu</a>
-            <a href="https://twitter.com/llorca" target="_blank" class="author">@llorca</a>
-          </div>
+          <a href="javascript:void(0);" class="app-store">
+            <img alt="App Store" src="img/app-store.svg" />
+          </a>
         </footer>
       </div>
     </div>
