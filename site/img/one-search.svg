@@ -1,50 +1,44 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
-    <title>3</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Splash" transform="translate(-580.000000, -496.000000)">
-            <g id="List" transform="translate(580.000000, 496.000000)">
-                <path d="M15,4.99531509 C15,2.23647875 17.230835,0 19.9985481,0 L44.0014519,0 C46.7620738,0 49,2.2402674 49,4.99531509 L49,59.0046849 C49,61.7635213 46.769165,64 44.0014519,64 L19.9985481,64 C17.2379262,64 15,61.7597326 15,59.0046849 L15,4.99531509 Z M16,8.99091407 L16,55.0090859 C16,56.1109357 16.896211,57 18.0017433,57 L45.9982567,57 C47.1107383,57 48,56.1086374 48,55.0090859 L48,8.99091407 C48,7.88906428 47.103789,7 45.9982567,7 L18.0017433,7 C16.8892617,7 16,7.89136259 16,8.99091407 Z" id="Combined-Shape" fill="#6F7D94"></path>
-                <path d="M17,35 L47,35 L47,55.0012539 C47,55.5528461 46.5526348,56 46.0018463,56 L17.9981537,56 C17.4468886,56 17,55.5613852 17,55.0012539 L17,35 Z" id="Rectangle-5" fill="#FFFFFF"></path>
-                <g id="Group-2" transform="translate(18.000000, 36.000000)" fill="#6F7D94" opacity="0.200000003">
-                    <rect id="Rectangle-6" x="0" y="0" width="3" height="4" rx="1"></rect>
-                    <rect id="Rectangle-6" x="4" y="0" width="3" height="4" rx="1"></rect>
-                    <rect id="Rectangle-6" x="8" y="0" width="3" height="4" rx="1"></rect>
-                    <rect id="Rectangle-6" x="12" y="0" width="3" height="4" rx="1"></rect>
-                    <rect id="Rectangle-6" x="16" y="0" width="3" height="4" rx="1"></rect>
-                    <rect id="Rectangle-6" x="20" y="0" width="3" height="4" rx="1"></rect>
-                    <rect id="Rectangle-6" x="24" y="0" width="4" height="4" rx="1"></rect>
-                    <rect id="Rectangle-6" x="2" y="5" width="3" height="4" rx="1"></rect>
-                    <rect id="Rectangle-6" x="6" y="5" width="3" height="4" rx="1"></rect>
-                    <rect id="Rectangle-6" x="10" y="5" width="3" height="4" rx="1"></rect>
-                    <rect id="Rectangle-6" x="14" y="5" width="3" height="4" rx="1"></rect>
-                    <rect id="Rectangle-6" x="18" y="5" width="3" height="4" rx="1"></rect>
-                    <rect id="Rectangle-6" x="22" y="5" width="3" height="4" rx="1"></rect>
-                    <rect id="Rectangle-6" x="0" y="10" width="3" height="4" rx="1"></rect>
-                    <rect id="Rectangle-6" x="4" y="10" width="3" height="4" rx="1"></rect>
-                    <rect id="Rectangle-6" x="8" y="10" width="3" height="4" rx="1"></rect>
-                    <rect id="Rectangle-6" x="12" y="10" width="3" height="4" rx="1"></rect>
-                    <rect id="Rectangle-6" x="16" y="10" width="3" height="4" rx="1"></rect>
-                    <rect id="Rectangle-6" x="20" y="10" width="3" height="4" rx="1"></rect>
-                    <rect id="Rectangle-6" x="24" y="10" width="4" height="4" rx="1"></rect>
-                    <rect id="Rectangle-6" x="0" y="15" width="7" height="4" rx="1"></rect>
-                    <rect id="Rectangle-6" x="8" y="15" width="11" height="4" rx="1"></rect>
-                    <rect id="Rectangle-6" x="20" y="15" width="8" height="4" rx="1"></rect>
-                </g>
-                <rect id="Rectangle-5" fill="#FFFFFF" x="17" y="30" width="30" height="4"></rect>
-                <rect id="Rectangle-5" fill="#6F7D94" opacity="0.200000018" x="17" y="30" width="30" height="4"></rect>
-                <rect id="Rectangle-5" fill="#FFFFFF" x="17" y="25" width="30" height="4"></rect>
-                <rect id="Rectangle-5" fill="#6F7D94" opacity="0.400000006" x="17" y="25" width="30" height="4"></rect>
-                <rect id="Rectangle-5" fill="#FFFFFF" x="17" y="20" width="30" height="4"></rect>
-                <rect id="Rectangle-5" fill="#6F7D94" opacity="0.600000024" x="17" y="20" width="30" height="4"></rect>
-                <rect id="Rectangle-5" fill="#FFFFFF" x="17" y="15" width="30" height="4"></rect>
-                <rect id="Rectangle-5" fill="#6F7D94" opacity="0.799999952" x="17" y="15" width="30" height="4"></rect>
-                <rect id="Rectangle-5" fill="#FFFFFF" x="17" y="10" width="30" height="4"></rect>
-                <rect id="Rectangle-5" fill="#6F7D94" x="17" y="10" width="30" height="4"></rect>
-            </g>
-        </g>
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <title>
+    one search
+  </title>
+  <g fill="none" fill-rule="evenodd">
+    <path d="M15 4.995C15 2.235 17.23 0 20 0h24c2.762 0 5 2.24 5 4.995v54.01C49 61.765 46.77 64 44 64H20c-2.762 0-5-2.24-5-4.995V4.995zm1 3.996v46.02c0 1.1.896 1.99 2.002 1.99h27.996C47.11 57 48 56.11 48 55.01V8.99C48 7.89 47.104 7 45.998 7H18.002C16.89 7 16 7.89 16 8.99z" fill="#6F7D94"/>
+    <path d="M17 35h30v20c0 .553-.447 1-.998 1H17.998c-.55 0-.998-.44-.998-1V35z" fill="#FFF"/>
+    <g transform="translate(18 36)" fill="#6F7D94" opacity=".2">
+      <rect width="3" height="4" rx="1"/>
+      <rect x="4" width="3" height="4" rx="1"/>
+      <rect x="8" width="3" height="4" rx="1"/>
+      <rect x="12" width="3" height="4" rx="1"/>
+      <rect x="16" width="3" height="4" rx="1"/>
+      <rect x="20" width="3" height="4" rx="1"/>
+      <rect x="24" width="4" height="4" rx="1"/>
+      <rect x="2" y="5" width="3" height="4" rx="1"/>
+      <rect x="6" y="5" width="3" height="4" rx="1"/>
+      <rect x="10" y="5" width="3" height="4" rx="1"/>
+      <rect x="14" y="5" width="3" height="4" rx="1"/>
+      <rect x="18" y="5" width="3" height="4" rx="1"/>
+      <rect x="22" y="5" width="3" height="4" rx="1"/>
+      <rect y="10" width="3" height="4" rx="1"/>
+      <rect x="4" y="10" width="3" height="4" rx="1"/>
+      <rect x="8" y="10" width="3" height="4" rx="1"/>
+      <rect x="12" y="10" width="3" height="4" rx="1"/>
+      <rect x="16" y="10" width="3" height="4" rx="1"/>
+      <rect x="20" y="10" width="3" height="4" rx="1"/>
+      <rect x="24" y="10" width="4" height="4" rx="1"/>
+      <rect y="15" width="7" height="4" rx="1"/>
+      <rect x="8" y="15" width="11" height="4" rx="1"/>
+      <rect x="20" y="15" width="8" height="4" rx="1"/>
     </g>
+    <path fill="#FFF" d="M17 30h30v4H17z"/>
+    <path fill="#6F7D94" opacity=".2" d="M17 30h30v4H17z"/>
+    <path fill="#FFF" d="M17 25h30v4H17z"/>
+    <path fill="#6F7D94" opacity=".4" d="M17 25h30v4H17z"/>
+    <path fill="#FFF" d="M17 20h30v4H17z"/>
+    <path fill="#6F7D94" opacity=".6" d="M17 20h30v4H17z"/>
+    <path fill="#FFF" d="M17 15h30v4H17z"/>
+    <path fill="#6F7D94" opacity=".8" d="M17 15h30v4H17z"/>
+    <path fill="#FFF" d="M17 10h30v4H17z"/>
+    <path fill="#6F7D94" d="M17 10h30v4H17z"/>
+  </g>
 </svg>
