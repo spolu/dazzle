@@ -33,6 +33,7 @@ export default function reducer(state = initialState, action = {}) {
           loadingProgress: 0,
           domain: url.domain,
           currentURL: navState.url,
+          targetURL: '',
           currentStatusCode: 200,
         };
         updated.results =  computeResults(updated.input, updated);
