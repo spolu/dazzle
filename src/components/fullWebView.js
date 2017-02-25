@@ -51,9 +51,13 @@ class FullWebView extends React.Component {
     // Navigate when we see targetURL change.
     if (this.props.targetURL != nextProps.targetURL &&
       nextProps.targetURL != '') {
-      this.setState({
-        url: nextProps.targetURL,
-      })
+      if (this.state.url == nextProps.targetURL) {
+        this.refs[WEBVIEW_REF].reload();
+      } else {
+        this.setState({
+          url: nextProps.targetURL,
+        })
+      }
     }
   }
 

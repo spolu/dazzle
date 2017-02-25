@@ -33,6 +33,7 @@ export default function reducer(state = initialState, action = {}) {
           loadingProgress: 0,
           domain: url.domain,
           currentURL: navState.url,
+          targetURL: '',
           currentStatusCode: 200,
         };
         updated.results =  computeResults(updated.input, updated);
@@ -54,11 +55,19 @@ export default function reducer(state = initialState, action = {}) {
     case constants.ACTION_LOAD_END:
       {
         if (constants.HISTORY_SKIPLIST.includes(url.domain+url.path)) {
-          return state;
+          return {
+            ...state,
+            isLoading: false,
+            loadingProgress: 1,
+          }
         }
         // Don't store non 20x results in history.
         if (state.currentStatusCode >= 300) {
-          return state;
+          return {
+            ...state,
+            isLoading: false,
+            loadingProgress: 1,
+          }
         }
 
         history[url.domain] = history[url.domain] || {
