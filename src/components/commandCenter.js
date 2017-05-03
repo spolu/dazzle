@@ -32,7 +32,7 @@ class CommandCenter extends Component {
           style={[
             styles.addressBar,
             this.props.mode == constants.MODE_COMMAND &&
-            styles.addressBarCommand,
+              styles.addressBarCommand,
           ]}
           onClick={this.onClick}
         >
@@ -40,7 +40,7 @@ class CommandCenter extends Component {
             style={[
               styles.urlTextContainer,
               this.props.mode == constants.MODE_COMMAND &&
-              styles.urlTextContainerCommand,
+                styles.urlTextContainerCommand,
             ]}
           >
             <Text
@@ -56,7 +56,7 @@ class CommandCenter extends Component {
             style={[
               styles.urlBarContainer,
               this.props.mode == constants.MODE_COMMAND &&
-              styles.urlBarContainerCommand,
+                styles.urlBarContainerCommand,
             ]}
           >
             <TextInput
@@ -93,9 +93,9 @@ class CommandCenter extends Component {
               styles.progressBar,
               {width: progressWidth},
               this.props.isLoading &&
-              styles.progressBarLoading,
+                styles.progressBarLoading,
               this.props.mode == constants.MODE_COMMAND &&
-              styles.progressBarCommand,
+                styles.progressBarCommand,
             ]}
           />
         </View>
