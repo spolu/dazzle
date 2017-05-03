@@ -168,7 +168,7 @@ var styles = StyleSheet.create({
   },
 
   row: {
-    borderTopWidth: 0.5,
+    borderTopWidth: StyleSheet.hairlineWidth,
     borderStyle: 'solid',
     borderTopColor: constants.BLACK_TRANSPARENT,
     height: constants.HEIGHT_CC_COMMAND,
