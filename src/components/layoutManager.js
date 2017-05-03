@@ -82,6 +82,7 @@ var styles = StyleSheet.create({
   vibrancyContainer: {
     flex: 0,
     height: constants.HEIGHT_CC_NAVIGATION,
+    borderRadius: constants.BORDER_RADIUS,
   },
   vibrancyContainerCommand: {
     flex: 1,
