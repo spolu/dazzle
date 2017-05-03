@@ -34,7 +34,7 @@ class LayoutManager extends Component {
           style={[
             styles.vibrancyContainer,
             this.props.mode == constants.MODE_COMMAND &&
-            styles.vibrancyContainerCommand,
+              styles.vibrancyContainerCommand,
           ]}
           blurType={"dark"}
           blurAmount={20}
@@ -43,7 +43,7 @@ class LayoutManager extends Component {
             style={[
               styles.listContainer,
               this.props.mode == constants.MODE_COMMAND &&
-              styles.listContainerCommand,
+                styles.listContainerCommand,
             ]}
           >
             <ResultList />
@@ -52,7 +52,7 @@ class LayoutManager extends Component {
             style={[
               styles.commandCenterContainer,
               this.props.mode == constants.MODE_COMMAND &&
-              styles.commandCenterContainerCommand,
+                styles.commandCenterContainerCommand,
             ]}
           >
             <CommandCenter />
